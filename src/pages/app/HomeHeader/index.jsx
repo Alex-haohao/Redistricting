@@ -14,10 +14,9 @@ export default class HomeHeader extends React.Component {
         <div className="home-header-nav">
           <div className="home-header-nav-item"><Link to="/">Home</Link></div>
 
-          <div className="home-header-nav-item"><Link to="/demo">Source Page</Link></div>
-          <div className="home-header-nav-item"><Link to="/demo">temp2</Link></div>
+          <div className="home-header-nav-item"><Link to="/sourcepage">Source Page</Link></div>
 
-          <div className="home-header-nav-item"> <Link to="/demo">About us</Link></div>
+          <div className="home-header-nav-item"> <Link to="/aboutus">About us</Link></div>
 
         </div>
       </div>
