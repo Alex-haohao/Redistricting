@@ -6,4 +6,3 @@ export function changeMapState(data){
         data
     }
 }
-

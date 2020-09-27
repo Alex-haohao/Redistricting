@@ -5,7 +5,11 @@ import { Layout, Breadcrumb,Row, Col } from 'antd';
 
 import Header from './HomeHeader'
 import Map from '../map'
-import SiderMenu from './Sidemenu'
+import SiderMenu from './MainSideMenu'
+import BoxPlot from './Summary/Chart/boxPlot'
+import {connect} from 'react-redux'
+import{bindActionCreators}  from 'redux'
+import * as mapDisplayAction from '../../actions/mapDisplay'
 
 const {Footer, Content } = Layout;
 
@@ -31,7 +35,10 @@ class App extends React.Component{
       <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
         <SiderMenu></SiderMenu>
 
-        <Content style={{ padding: '0 24px', minHeight: '90vh' }}><Map></Map></Content>
+        <Content style={{ padding: '0 24px', minHeight: '90vh' }}>
+          {this.props.MapDisplay.isShow  ?  <Map></Map> : <BoxPlot></BoxPlot>}
+          
+        </Content>
       </Layout>
     </Content>
     </Col>
@@ -44,4 +51,18 @@ class App extends React.Component{
   }
 }
 
-export default App;
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    mapDisplayAction:bindActionCreators(mapDisplayAction,dispatch),
+
+  }
+}
+
+const mapStateToProps =(state)=>{
+  return{
+    MapDisplay:state.MapDisplay
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App) ;
