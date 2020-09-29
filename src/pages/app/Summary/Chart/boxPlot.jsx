@@ -169,12 +169,6 @@ export default class Demo extends React.Component {
         height={500}
         data={dv.rows}
         autoFit
-        scale={{
-          range: {
-            max: 1,
-            nice: true,
-          },
-        }}
         scale={scale}
         padding="auto"
       >
@@ -200,10 +194,11 @@ export default class Demo extends React.Component {
 
         <Point
           position="x*BVAPPercentage"
-          // label="BVAPPercentage"
+          label={["BVAPPercentage", { style: { fill: 'red' } }]}
           style={{
-            fill: "rgb(0, 0, 255)",
+            fill: "rgb(255, 0, 0)",
           }}
+          shape='square'
         />
 
         <Schema
@@ -228,6 +223,7 @@ export default class Demo extends React.Component {
             },
           ]}
         />
+
         <Interaction type={"active-region"} />
 
         <Annotation.Region
