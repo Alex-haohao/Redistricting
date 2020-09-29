@@ -1,7 +1,8 @@
 import React, {createRef} from 'react';
 import './style.less'
-import StateGeoData from '../../static/stateGeoJson'
+import StateGeoData from '../../static/us_state.json'
 import GAGeoData from '../../static/GA_precincts16.json'
+// import newStateGeoData from '../../s'
 
 import { Map, TileLayer,GeoJSON} from 'react-leaflet'
 
@@ -9,7 +10,7 @@ import {connect} from 'react-redux'
 import{bindActionCreators}  from 'redux'
 import * as mapAction from '../../actions/mapAction'
 import Description from './Description/precinctDescription'
-
+import StateDescription from './Description/StateDescription'
 
 const DEFAULT_VIEWPORT = {
     center: [37.8, -96],
@@ -87,12 +88,10 @@ class leafletMap extends React.Component {
         layer.setStyle({fillColor :'red'})
 
        
-        if(feature.properties.name === "Georgia"){
+        if(feature.properties.NAME === "Georgia"){
         this.setState({ 
           geodata: GAGeoData,
           geokey:"GA-key",
-          
-          
          })
 
          this.props.mapAction.changeMapState({
@@ -101,6 +100,7 @@ class leafletMap extends React.Component {
           position:"GA"
         })
       }
+      
         
         },
 
@@ -110,6 +110,8 @@ class leafletMap extends React.Component {
           
           this.setState({ descriptDisplay: 1,
             descriptionInfo:{
+              State_Name: feature.properties.NAME,
+              State_Land: feature.properties.ALAND,
               PRECINCT_N:feature.properties.PRECINCT_N ,
               PRES16D: feature.properties.PRES16D,
               PRES16R: feature.properties.PRES16R,
@@ -147,12 +149,28 @@ class leafletMap extends React.Component {
   
 
   render() {
+    let geodata = this.state.geodata;
+    let geokey = this.state.geokey;
+
+    if(this.props.Mapstate.position ==="US"){
+      geodata = StateGeoData;
+      geokey = "state-key";
+    }
    
     return (
-      <div><Description 
-      opacity={this.state.descriptDisplay}
-      descriptionInfo = {this.state.descriptionInfo}
-      ></Description>
+
+      
+      <div>
+        {this.props.Mapstate.position ==="US" ? <StateDescription 
+        descriptionInfo = {this.state.descriptionInfo}
+        opacity={this.state.descriptDisplay}
+        ></StateDescription>:
+         <Description 
+         opacity={this.state.descriptDisplay}
+         descriptionInfo = {this.state.descriptionInfo}
+         ></Description>
+        }
+       
 
       <Map 
       viewport={this.props.Mapstate}
@@ -166,8 +184,8 @@ class leafletMap extends React.Component {
 
         {
               <GeoJSON
-              key={this.state.geokey}
-              data={this.state.geodata} 
+              key={geokey}
+              data={geodata} 
               onEachFeature={this.onEachFeature.bind(this)}
               />
             }

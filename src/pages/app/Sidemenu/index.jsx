@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, Tabs } from 'antd';
 import Tab1 from "./Tab1"
 import Tab2 from "./Tab2"
+import Tab3 from "./Tab3"
 
 const { TabPane } = Tabs;
 const { Sider } = Layout;
@@ -28,8 +29,8 @@ export default class Sidermenu extends React.Component {
                     <TabPane tab="Map Display" key="2">
                         <Tab2></Tab2>
                     </TabPane>
-                    <TabPane tab="Tab 3" key="3">
-                        Content of Tab Pane 3
+                    <TabPane tab="Parameter" key="3">
+                        <Tab3></Tab3>
                      </TabPane>
                 </Tabs>
 

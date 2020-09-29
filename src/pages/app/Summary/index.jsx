@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import{bindActionCreators}  from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
-import { Card ,Button} from 'antd';
+import { Card } from 'antd';
 
 const { Meta } = Card;
 

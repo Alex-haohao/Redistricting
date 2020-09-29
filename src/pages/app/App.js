@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.less';
+import SuccessPopUp from "../../utils/Success"
 
 import { Layout, Breadcrumb,Row, Col } from 'antd';
 
@@ -16,12 +17,14 @@ const {Footer, Content } = Layout;
 
 class App extends React.Component{
 
-  
 
   render(){
     return(
+      
     <Layout>
     <Header></Header>
+    {this.props.PopUp.isPopUp ? <SuccessPopUp></SuccessPopUp> : null}
+
     <Row>
       <Col span={1}></Col>
       <Col span={21}>
@@ -37,7 +40,7 @@ class App extends React.Component{
 
         <Content style={{ padding: '0 24px', minHeight: '90vh' }}>
           {this.props.MapDisplay.isShow  ?  <Map></Map> : <BoxPlot></BoxPlot>}
-          
+  
         </Content>
       </Layout>
     </Content>
@@ -61,7 +64,8 @@ const mapDispatchToProps = (dispatch) =>{
 
 const mapStateToProps =(state)=>{
   return{
-    MapDisplay:state.MapDisplay
+    MapDisplay:state.MapDisplay,
+    PopUp: state.PopUp
   }
 }
 
