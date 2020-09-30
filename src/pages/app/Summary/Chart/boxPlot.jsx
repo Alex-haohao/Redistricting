@@ -129,11 +129,26 @@ export default class Demo extends React.Component {
       },
     ];
 
-    for (let i = 0; i < data.length; i++) {
-      let districtId = data[i]["x"];
-      let BVAPPercentage = GeorgiaDistrictsDataWithoutGeoposition[districtId]["BVAP%"]
+    // for (let i = 0; i < data.length; i++) {
+    //   let districtId = data[i]["x"];
+    //   let BVAPPercentage = GeorgiaDistrictsDataWithoutGeoposition[districtId]["BVAP%"]
+    //   let rounded = Math.round((BVAPPercentage + Number.EPSILON) * 100) / 100
+    //   data[i]["BVAPPercentage"] = rounded
+    // }
+
+    // extract all BVAP% info from the districts
+    let BVAPPercentages = []
+    for (const district in GeorgiaDistrictsDataWithoutGeoposition) {
+      let BVAPPercentage = GeorgiaDistrictsDataWithoutGeoposition[district]["BVAP%"]
       let rounded = Math.round((BVAPPercentage + Number.EPSILON) * 100) / 100
-      data[i]["BVAPPercentage"] = rounded
+      BVAPPercentages.push(rounded)
+    }
+
+    // sort the BVAP% 
+    BVAPPercentages.sort()
+  
+    for (let i = 0; i < data.length; i++) {
+      data[i]["BVAPPercentage"] = BVAPPercentages[i]
     }
 
     const dv = new DataView().source(data);
