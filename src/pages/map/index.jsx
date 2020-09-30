@@ -1,6 +1,6 @@
 import React, {createRef} from 'react';
 import './style.less'
-import StateGeoData from '../../static/us_state.json'
+import StateGeoData from '../../static/stateGeoJson'
 import GAGeoData from '../../static/GA_precincts16.json'
 // import newStateGeoData from '../../s'
 
@@ -179,7 +179,7 @@ class leafletMap extends React.Component {
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
+          url='	https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
         />
 
         {

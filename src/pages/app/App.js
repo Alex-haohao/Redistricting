@@ -2,7 +2,7 @@ import React from 'react';
 import './App.less';
 import SuccessPopUp from "../../utils/Success"
 
-import { Layout, Breadcrumb,Row, Col } from 'antd';
+import { Layout,Row, Col } from 'antd';
 
 import Header from './HomeHeader'
 import Map from '../map'
@@ -26,26 +26,18 @@ class App extends React.Component{
     {this.props.PopUp.isPopUp ? <SuccessPopUp></SuccessPopUp> : null}
 
     <Row>
-      <Col span={1}></Col>
-      <Col span={21}>
-      
     
-    <Content style={{ padding: '0 50px' }}>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
-      <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+    <Content>
+      <Layout className="site-layout-background">
         <SiderMenu></SiderMenu>
 
-        <Content style={{ padding: '0 24px', minHeight: '90vh' }}>
+        <Content style={{minHeight: '90vh' }}>
           {this.props.MapDisplay.isShow  ?  <Map></Map> : <BoxPlot></BoxPlot>}
   
         </Content>
       </Layout>
     </Content>
-    </Col>
-    <Col span={1}></Col>
+
     </Row>
     <Footer style={{ textAlign: 'center' }}>CSE416 Team Seahawks</Footer>
   </Layout>

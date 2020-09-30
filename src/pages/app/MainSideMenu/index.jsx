@@ -5,10 +5,10 @@ import {connect} from 'react-redux'
 import{bindActionCreators}  from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 import Summary from "../Summary/index"
+import Result from "../Result"
 
 const { TabPane } = Tabs;
 const { Sider } = Layout;
-
 
  class Sidermenu extends React.Component {
 
@@ -27,18 +27,28 @@ const { Sider } = Layout;
 
     render() {
         return (
-            <Sider className="site-layout-background" width={305}>
+            <Sider className="site-layout-background" width={340}>
                 <Button type="primary" style={{width:"100%"}} onClick={this.handleChangetoMap}>Back to Map</Button>
 
-                <Tabs defaultActiveKey="1" type="card" centered style={{ "backgroundColor": "white",height:"100%" }}>
-                    <TabPane tab="Map Control" key="1" >
-                        <MapControl></MapControl>
+                <Tabs  activeKey={this.props.MapDisplay.sidemenu.toString()} 
+                onChange={key =>{
+
+                    this.props.mapDisplayAction.changeMapDisplay({
+                        isShow: this.props.MapDisplay.isShow,
+                        display: this.props.MapDisplay.display,
+                        sidemenu : key
+                      })
+                }}
+                
+                 type="card" centered style={{ "backgroundColor": "white",height:"100%" ,maxHeight:"100vh",overflow:"scroll"}}>
+                    <TabPane tab="Configuration" key="1"  >
+                    <MapControl></MapControl>
                     </TabPane>
-                    <TabPane tab="SeaWulf" key="2" >
-                        Content of Tab Pane 2
+                    <TabPane tab="Result" key="2" >
+                    <Result></Result>:
                     </TabPane>
                     <TabPane tab="Summary" key="3" >
-                        <Summary></Summary>
+                    <Summary></Summary>
                      </TabPane>
                 </Tabs>
             </Sider>
