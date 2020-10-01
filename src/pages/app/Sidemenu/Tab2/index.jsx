@@ -36,6 +36,10 @@ class Tab2 extends React.Component{
             zoom: 4,
             position:"US"
           })
+        this.setState({
+            colorvalue:0,
+            levelvalue:0
+        })
     }
     
       render() {
@@ -54,13 +58,22 @@ class Tab2 extends React.Component{
 
             <p style={{marginLeft:"10px",fontSize:"20px"}}> Display map by</p>
           <Radio.Group onChange={this.colorOnChange} value={colorvalue} size="large" style={{marginLeft:"10px",fontSize:"20px"}}>
-            <Radio style={radioStyle} value={"race"} size="large">
-            Race
+            <Radio style={radioStyle} value={"WhiteDensity"} size="large">
+            white population density  
             </Radio>
-            <Radio style={radioStyle} value={"population density"} size="large">
-            Population density
+            <Radio style={radioStyle} value={"AsianDensity"} size="large">
+            Asian population density  
             </Radio>
-            <Radio style={radioStyle} value={"Democratic-Republican"} size="large">
+            <Radio style={radioStyle} value={"AfricanAmericandensity"} size="large">
+            Black population density  
+            </Radio>
+            <Radio style={radioStyle} value={"AmericanIndian"} size="large">
+            American Indian Population density
+            </Radio>
+            <Radio style={radioStyle} value={"populationDensity"} size="large">
+            Total Population density
+            </Radio>
+            <Radio style={radioStyle} value={"DemocraticRepublican"} size="large">
             Democratic-Republican
             </Radio>
           </Radio.Group>

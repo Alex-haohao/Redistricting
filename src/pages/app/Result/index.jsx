@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ResultBox from "./ResultBox"
 
-import textdata from "../../../static/resultexample.json"
+// import textdata from "../../../static/resultexample.json"
 import * as mapAction from '../../../actions/mapAction'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 
@@ -15,8 +15,7 @@ class Result extends React.Component {
 
 
   render() {
-    let data = textdata.features
-    console.log(textdata.features)
+    let data = this.props.TotalResult.features
     return (
 
 
@@ -50,7 +49,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     Mapstate: state.Mapstate,
-    MapDisplay: state.MapDisplay
+    MapDisplay: state.MapDisplay,
+    TotalResult:state.TotalResult
 
   }
 }

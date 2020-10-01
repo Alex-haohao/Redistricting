@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import{bindActionCreators}  from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 import Summary from "../Summary/index"
-import Result from "../Result"
+import History from "../Result"
 
 const { TabPane } = Tabs;
 const { Sider } = Layout;
@@ -44,8 +44,8 @@ const { Sider } = Layout;
                     <TabPane tab="Configuration" key="1"  >
                     <MapControl></MapControl>
                     </TabPane>
-                    <TabPane tab="Result" key="2" >
-                    <Result></Result>:
+                    <TabPane tab="History" key="2" >
+                    <History></History>:
                     </TabPane>
                     <TabPane tab="Summary" key="3" >
                     <Summary></Summary>

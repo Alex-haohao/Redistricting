@@ -6,6 +6,10 @@ import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as PopUpAction from '../../../../actions/showPopUp'
 import { InputNumber } from 'antd';
 import { Select, Layout, Slider, Row, Col, Button, Progress } from 'antd';
+import shortid from 'shortid'
+import {addResult,deleteResult}  from '../../../../actions/totalResult'
+
+
 const { Content } = Layout;
 const { Option } = Select;
 
@@ -50,6 +54,16 @@ class Tab3 extends React.Component {
       }
 
     PopUpHandler = () => {
+        //////////////////////////////////////////////////////////////////////////////
+// this part will change after we connect the real backend
+this.props.addResult({jobid:shortid.generate(),properties:{
+    state: this.props.Mapstate.position,
+    Plan: this.state.PlanNuminputValue,
+    PopDiff: this.state.PopDiffinputValue,
+    compactness: this.state.CompactnessinputValue,
+    Minority:this.state.MinorityGroup,
+    }})
+//////////////////////////////////////////////////////////////////////////////
         let timer = setInterval(() => {
             let percent = this.state.percent + 10;
             if (percent > 100) {
@@ -61,9 +75,11 @@ class Tab3 extends React.Component {
                 setTimeout(() => {
 
                     clearInterval(timer);
+
                     this.props.PopUpAction.changePopUp({
                         isPopUp: true,
                     })
+                    
                     this.setState({ percent: 0 });
 
                 }, 500);
@@ -193,6 +209,8 @@ const mapDispatchToProps = (dispatch) => {
         mapDisplayAction: bindActionCreators(mapDisplayAction, dispatch),
         mapAction: bindActionCreators(mapAction, dispatch),
         PopUpAction: bindActionCreators(PopUpAction, dispatch),
+        addResult: bindActionCreators(addResult, dispatch),
+        deleteResult: bindActionCreators(deleteResult, dispatch),
     }
 }
 

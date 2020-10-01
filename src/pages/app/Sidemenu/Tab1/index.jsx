@@ -58,10 +58,9 @@ class Tab1 extends React.Component {
         defaultOpenKeys={['sub1']}
         style={{ height: '100%' }}
       >
-        <Menu.Item key="1" onClick={this.handleZoomUS}>The US</Menu.Item>
-        <Menu.Item key="2" onClick={this.handleZoomGeorgia}>Georgia</Menu.Item>
-        <Menu.Item key="3" onClick={this.handleZoomLouisiana}>Louisiana</Menu.Item>
-        <Menu.Item key="4" onClick={this.handleZoomMississippi}>Mississippi</Menu.Item>
+        <Menu.Item key="1" onClick={this.handleZoomGeorgia}>Georgia</Menu.Item>
+        <Menu.Item key="2" onClick={this.handleZoomLouisiana}>Louisiana</Menu.Item>
+        <Menu.Item key="3" onClick={this.handleZoomMississippi}>Mississippi</Menu.Item>
       </Menu>
     );
 
