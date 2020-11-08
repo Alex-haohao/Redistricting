@@ -6,14 +6,15 @@ export function getData(url) {
 }
 
 export function postData(url,data) {
+    console.log("hahahahahahah")
+    console.log(JSON.stringify(data))
     const result = fetch(url, {
-        method: "post",
+        method: 'post',
         headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         },
-        body:qs.stringify(data)
-    })
+        body: JSON.stringify(data)
+      })
     return result;
 }
 
@@ -24,7 +25,6 @@ export function deleteData(url, data){
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body:qs.stringify(data)
     })
     return result;
 }

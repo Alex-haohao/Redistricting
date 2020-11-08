@@ -8,7 +8,7 @@ import { message, InputNumber } from 'antd';
 import { Select, Layout, Slider, Row, Col, Button, Progress } from 'antd';
 import shortid from 'shortid'
 import { addResult, deleteResult } from '../../../../actions/totalResult'
-
+import api from '../../../../api'
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -62,14 +62,25 @@ class Tab3 extends React.Component {
             return
         }
 
-        this.props.addResult({
-            jobid: shortid.generate(), properties: {
-                state: this.props.Mapstate.position,
-                Plan: this.state.PlanNuminputValue,
-                PopDiff: this.state.PopDiffinputValue,
-                compactness: this.state.CompactnessinputValue,
-                Minority: this.state.MinorityGroup,
-            }
+        // this.props.addResult({
+        //     jobid: shortid.generate(), properties: {
+        //         state: this.props.Mapstate.position,
+        //         Plan: this.state.PlanNuminputValue,
+        //         PopDiff: this.state.PopDiffinputValue,
+        //         compactness: this.state.CompactnessinputValue,
+        //         Minority: this.state.MinorityGroup,
+        //     }
+        // })
+
+        const data = {state: "GEORGIA",
+            numberOfDistrictings: this.state.PlanNuminputValue,
+            populationDifference: this.state.PopDiffinputValue,
+            compactnessGoal: this.state.CompactnessinputValue,
+            // Minority: this.state.MinorityGroup,
+        }
+
+        api.jobs.addJob(data).then(res =>{
+            console.log(res)
         })
         //////////////////////////////////////////////////////////////////////////////
 

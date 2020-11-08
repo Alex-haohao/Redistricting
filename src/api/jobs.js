@@ -4,7 +4,7 @@ import { getData,postData,deleteData } from "../utils/http"
 
 const jobs = {
     addJob(data){
-        return postData(base.jobs,data);
+        return postData(base.job,data);
     }
     ,
     getJob(){
@@ -12,7 +12,7 @@ const jobs = {
     }
 ,
     deleteJob(data){
-        return deleteData(base.jobs,data)
+        return deleteData(base.job+"?jobId="+data)
     }
 
 }

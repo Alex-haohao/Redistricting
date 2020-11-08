@@ -7,7 +7,7 @@ import {addResult,deleteResult}  from '../../../../actions/totalResult'
 
 class modal extends React.Component {
   state = {
-    ModalText: 'Really want to delete is job? This job cannot be recoverd',
+    ModalText: 'Really want to Cancel this job? This job cannot be recoverd',
     visible: false,
     confirmLoading: false,
   };
@@ -27,7 +27,7 @@ class modal extends React.Component {
    
 
     this.setState({
-      ModalText: 'You delete the job successfully',
+      ModalText: 'You Cancel the job successfully',
       confirmLoading: true,
     });
     setTimeout(() => {
@@ -54,8 +54,9 @@ class modal extends React.Component {
     const { visible, confirmLoading, ModalText } = this.state;
     return (
       <>
-        <Button type="primary" danger onClick={this.showModal.bind(this)}>
-          Delete
+        <Button type="primary" danger onClick={this.showModal.bind(this)}
+        style={{marginRight:"5px"}}>
+          Cancel
         </Button>
         <Modal
           title="Alert"

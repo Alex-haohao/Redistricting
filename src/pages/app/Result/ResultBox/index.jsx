@@ -5,7 +5,7 @@ import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as resultAction from '../../../../actions/resultAction'
 import { Card } from 'antd';
 import DeleteModal from "../PopUpModel"
-// import CancelModal from "../CancelPopUp"
+import CancelModal from "../CancelPopUp"
 import './style.less'
 
 
@@ -46,9 +46,13 @@ class ResultBox extends React.Component {
                 title="Job detail" onClick={this.changeCurrentRes.bind(this)}
                 hoverable
                  extra={
+                     <div>
+                    <CancelModal onClick={e =>{e.stopPropagation()}}
+                     jobid = {this.props.data.jobId}>
+                     </CancelModal>
                     <DeleteModal onClick={e =>{e.stopPropagation()}}
                      jobid = {this.props.data.jobId}></DeleteModal> 
-                    
+                    </div>
                  }
                 style={{ width: 300, marginLeft: ' 20px', marginBottom: '20px' }}>
                 <p style={{ fontSize: "18px" }}>status: {this.props.data.status}</p>
