@@ -1,5 +1,5 @@
 import {ADD,DELETE} from '../constans/totalResult'
-
+import api from "../api"
 
 export function addResult(data){
     return{
@@ -15,3 +15,10 @@ export const deleteResult = (id) =>{
     }
 }
 
+export const update = () =>{
+    return dispatch =>{
+         api.jobs.getJob().then(res =>res.json()).then(data => {
+             return data   
+              })
+    }
+}

@@ -1,9 +1,8 @@
 import * as mapActions from "../constans/map"
 
-export function changeMapState(data){
+export function changMapData(data){
     return{
-        type:mapActions.STATECHANGE,
+        type:mapActions.MAPDATA,
         data
     }
 }
-

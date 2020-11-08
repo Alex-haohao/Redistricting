@@ -6,6 +6,9 @@ import { UserOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 
 import Alexpic from '../../static/asuka.jpg'
+import haoyu from '../../static/haoyu.png'
+import boren from '../../static/boren.png'
+import yuchen from '../../static/yuchen.png'
 const { Footer, Content } = Layout;
 
 
@@ -28,26 +31,28 @@ export default class Aboutus extends React.Component {
                                     I am Tianhao Xi, my work is GUI design.
                              </Content>
 
-                                <Divider orientation="left" style={{ fontSize: "30px" }}>
-                                    <Avatar size={64} style={{ margin: '24px 24px' }} icon={<UserOutlined />} /> Yuchen Pu
-                             <Content>
 
-                                    </Content>
-                                </Divider>
+                             <Divider orientation="left" style={{ fontSize: "30px" }}>
+                                    <Avatar size={64} style={{ margin: '24px 24px' }} src={yuchen} /> Yuchen Pu
+                             </Divider>
+                                <Content style={{ padding: '0 24px', margin: '0 100px' }}>
+                                Hi, I am Yuchen Pu, I am working on database.
+                             </Content>
 
-                                <Divider orientation="left" style={{ fontSize: "30px" }}>
-                                    <Avatar size={64} style={{ margin: '24px 24px' }} icon={<UserOutlined />} /> Haoyu Lu
-                             <Content>
+                             <Divider orientation="left" style={{ fontSize: "30px" }}>
+                                    <Avatar size={64} style={{ margin: '24px 24px' }} src={haoyu} />  Haoyu Lu
+                             </Divider>
+                                <Content style={{ padding: '0 24px', margin: '0 100px' }}>
+                                I am haoyu lu. I am working on server logic.
+                             </Content>
 
-                                    </Content>
-                                </Divider>
+                             <Divider orientation="left" style={{ fontSize: "30px" }}>
+                                    <Avatar size={64} style={{ margin: '24px 24px' }} src={boren} /> Boren Wang
+                             </Divider>
+                                <Content style={{ padding: '0 24px', margin: '0 100px' }}>
+                                I am Boren, I am working on server and database
+                             </Content>
 
-                                <Divider orientation="left" style={{ fontSize: "30px" }}>
-                                    <Avatar size={64} style={{ margin: '24px 24px' }} icon={<UserOutlined />} /> Boren Wang
-                             <Content>
-
-                                    </Content>
-                                </Divider>
 
 
                             </Content>

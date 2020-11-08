@@ -1,6 +1,6 @@
 {"type":"Result","features":[
-    {"jobid":"1","properties":{"state":"Georgia","compactness":0.2,"Minority":"Black","Plan":3000,"PopDiff":100}},
-    {"jobid":"2","properties":{"state":"Georgia","compactness":0.5,"Minority":"Asian","Plan":5000,"PopDiff":200}},
-    {"jobid":"3","properties":{"state":"Georgia","compactness":0.7,"Minority":"Black","Plan":10000,"PopDiff":250}}
+    {"jobid":"IJCISPACP","properties":{"state":"GA","compactness":0.2,"Minority":"Black","Plan":3000,"PopDiff":100}},
+    {"jobid":"CSAMASCAS","properties":{"state":"GA","compactness":0.5,"Minority":"Asian","Plan":5000,"PopDiff":200}},
+    {"jobid":"JVIWEVOIJ","properties":{"state":"GA","compactness":0.7,"Minority":"Black","Plan":10000,"PopDiff":250}}
 ]}
    

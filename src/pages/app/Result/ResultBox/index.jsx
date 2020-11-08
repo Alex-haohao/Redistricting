@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as resultAction from '../../../../actions/resultAction'
 import { Card } from 'antd';
-import Modal from "../PopUpModel"
+import DeleteModal from "../PopUpModel"
+// import CancelModal from "../CancelPopUp"
 import './style.less'
 
 
@@ -22,9 +23,10 @@ class ResultBox extends React.Component {
         })
     }
 
-    changeCurrentRes = () => {
+    changeCurrentRes = (e) => {
+        e.stopPropagation()
         this.props.resultAction.changeCurrentResult({
-            jobid: this.props.data.jobid
+            jobid: this.props.data.jobId
         })
         this.props.mapDisplayAction.changeMapDisplay({
             isShow: this.props.MapDisplay.isShow,
@@ -41,20 +43,20 @@ class ResultBox extends React.Component {
     render() {
         return (
             <Card
-                title="Job detail" onClick={this.changeCurrentRes}
+                title="Job detail" onClick={this.changeCurrentRes.bind(this)}
                 hoverable
                  extra={
-                    <Modal jobid = {this.props.data.jobid}></Modal> 
+                    <DeleteModal onClick={e =>{e.stopPropagation()}}
+                     jobid = {this.props.data.jobId}></DeleteModal> 
                     
                  }
                 style={{ width: 300, marginLeft: ' 20px', marginBottom: '20px' }}>
-                <p style={{ fontSize: "18px" }}>Job ID: {this.props.data.jobid}</p>
-                <p style={{ fontSize: "18px" }}>State: {this.props.data.properties.state}</p>
-                <p style={{ fontSize: "18px" }}>Plan numbers: {this.props.data.properties.Plan}</p>
-                <p style={{ fontSize: "18px" }}>Compactness: {this.props.data.properties.compactness}</p>
-                <p style={{ fontSize: "18px" }}>Minority group: {this.props.data.properties.Minority}</p>
-                <p style={{ fontSize: "18px" }}>Population Difference: {this.props.data.properties.PopDiff}</p>
-
+                <p style={{ fontSize: "18px" }}>status: {this.props.data.status}</p>
+                <p style={{ fontSize: "18px" }}>Job ID: {this.props.data.jobId}</p>
+                <p style={{ fontSize: "18px" }}>State: {this.props.data.state}</p>
+                <p style={{ fontSize: "18px" }}>Plan numbers: {this.props.data.numberOfDistrictings}</p>
+                <p style={{ fontSize: "18px" }}>Compactness: {this.props.data.compactnessGoal}</p>
+                <p style={{ fontSize: "18px" }}>Population Difference: {this.props.data.populationDifference}</p>
             </Card>
         )
 

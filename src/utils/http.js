@@ -16,3 +16,16 @@ export function postData(url,data) {
     })
     return result;
 }
+
+export function deleteData(url, data){
+    const result = fetch(url, {
+        method: "delete",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body:qs.stringify(data)
+    })
+    return result;
+}
+

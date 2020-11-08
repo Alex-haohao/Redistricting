@@ -9,8 +9,10 @@ import { Map, TileLayer,GeoJSON} from 'react-leaflet'
 import {connect} from 'react-redux'
 import{bindActionCreators}  from 'redux'
 import * as mapAction from '../../actions/mapAction'
+
 import Description from './Description/precinctDescription'
 import StateDescription from './Description/StateDescription'
+
 
 const DEFAULT_VIEWPORT = {
     center: [37.8, -96],
@@ -111,7 +113,7 @@ class leafletMap extends React.Component {
           this.setState({ descriptDisplay: 1,
             descriptionInfo:{
               State_Name: feature.properties.NAME,
-              State_Land: feature.properties.ALAND,
+              State_Land: feature.properties.density,
               PRECINCT_N:feature.properties.PRECINCT_N ,
               PRES16D: feature.properties.PRES16D,
               PRES16R: feature.properties.PRES16R,
@@ -177,6 +179,8 @@ class leafletMap extends React.Component {
       ref={this.mapRef}
       onClick={this.handleClickGetLat.bind(this)}
       >
+
+        
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='	https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
@@ -204,7 +208,7 @@ const mapDispatchToProps = (dispatch) =>{
 
 const mapStateToProps =(state)=>{
     return{
-        Mapstate:state.Mapstate
+        Mapstate:state.Mapstate,
     }
 }
 

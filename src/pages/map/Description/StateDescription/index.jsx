@@ -25,7 +25,7 @@ export default class Description extends React.Component {
               size={this.state.size}
             >
               <Descriptions.Item label="Info" >
-                Current land area: {this.props.descriptionInfo.State_Land}  
+                Population /sqmi: {this.props.descriptionInfo.State_Land}  
                 <br />
                 State name: {this.props.descriptionInfo.State_Name}
                 <br />

@@ -29,8 +29,8 @@ class Success extends React.Component {
             className="popUpContent"
             style={{position:"fixed",zIndex:10000,backgroundColor:"white"}}
             status="success"
-            title="Successfully got result"
-            subTitle="Click button back to Home Page"
+            title="Successful"
+            subTitle="Click button back to result page"
             extra={[
               <Button onClick={this.PopUpHandler} type="primary" key="home">
                 Go to result

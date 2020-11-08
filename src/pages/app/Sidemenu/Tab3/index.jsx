@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux'
 import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as PopUpAction from '../../../../actions/showPopUp'
-import { InputNumber } from 'antd';
+import { message, InputNumber } from 'antd';
 import { Select, Layout, Slider, Row, Col, Button, Progress } from 'antd';
 import shortid from 'shortid'
-import {addResult,deleteResult}  from '../../../../actions/totalResult'
+import { addResult, deleteResult } from '../../../../actions/totalResult'
 
 
 const { Content } = Layout;
@@ -23,7 +23,7 @@ class Tab3 extends React.Component {
             PlanNuminputValue: 1,
             PopDiffinputValue: 0,
             CompactnessinputValue: 0,
-            MinorityGroup:"Black",
+            MinorityGroup: "Black",
             percent: 0,
         };
     }
@@ -46,24 +46,34 @@ class Tab3 extends React.Component {
         });
     }
 
-     handleGroupChange = (value) =>{
+    handleGroupChange = (value) => {
         console.log(`selected ${value}`);
         this.setState({
             MinorityGroup: value,
         });
-      }
+    }
 
     PopUpHandler = () => {
+
         //////////////////////////////////////////////////////////////////////////////
-// this part will change after we connect the real backend
-this.props.addResult({jobid:shortid.generate(),properties:{
-    state: this.props.Mapstate.position,
-    Plan: this.state.PlanNuminputValue,
-    PopDiff: this.state.PopDiffinputValue,
-    compactness: this.state.CompactnessinputValue,
-    Minority:this.state.MinorityGroup,
-    }})
-//////////////////////////////////////////////////////////////////////////////
+        // this part will change after we connect the real backend
+        if(this.props.Mapstate.position ==="US"){
+            message.warning('You did not select any state');
+            return
+        }
+
+        this.props.addResult({
+            jobid: shortid.generate(), properties: {
+                state: this.props.Mapstate.position,
+                Plan: this.state.PlanNuminputValue,
+                PopDiff: this.state.PopDiffinputValue,
+                compactness: this.state.CompactnessinputValue,
+                Minority: this.state.MinorityGroup,
+            }
+        })
+        //////////////////////////////////////////////////////////////////////////////
+
+
         let timer = setInterval(() => {
             let percent = this.state.percent + 10;
             if (percent > 100) {
@@ -79,7 +89,7 @@ this.props.addResult({jobid:shortid.generate(),properties:{
                     this.props.PopUpAction.changePopUp({
                         isPopUp: true,
                     })
-                    
+
                     this.setState({ percent: 0 });
 
                 }, 500);
@@ -99,7 +109,7 @@ this.props.addResult({jobid:shortid.generate(),properties:{
         return (
 
             <Content>
-                <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Plan numbers: </span>
+                <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Plan Numbers: </span>
                 <InputNumber size="large" min={100} max={10000} value={PlanNuminputValue} onChange={this.onPlanNumChange} />
                 <br />
                 <Row>
@@ -156,9 +166,9 @@ this.props.addResult({jobid:shortid.generate(),properties:{
 
 
 
-            <br></br>
-                <span style={{ fontSize: 20, marginLeft:40 }}>minority group selection: </span>
-                <Row style={{marginTop:15}}>
+                <br></br>
+                <span style={{ fontSize: 20, marginLeft: 40 }}>minority group selection: </span>
+                <Row style={{ marginTop: 15 }}>
                     <Col span={3}></Col>
                     <Col span={18}>
                         <Select defaultValue="Hispanic" style={{ width: 240 }} onChange={this.handleGroupChange}>
@@ -169,7 +179,7 @@ this.props.addResult({jobid:shortid.generate(),properties:{
                             <Option value="Native Hawaiian and Pacific Islander">Native Hawaiian and Pacific Islander</Option>
                             <Option value="Other race">Other race</Option>
                         </Select>
-                      
+
                     </Col>
                 </Row>
 

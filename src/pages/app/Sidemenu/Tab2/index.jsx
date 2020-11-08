@@ -56,36 +56,33 @@ class Tab2 extends React.Component{
             <Button onClick={this.handleReset} style={{width:"100%",marginBottom:"20px"}}>Reset</Button>
    
 
-            <p style={{marginLeft:"10px",fontSize:"20px"}}> Display map by</p>
+            <p style={{marginLeft:"10px",fontSize:"20px"}}> Display map by population density</p>
           <Radio.Group onChange={this.colorOnChange} value={colorvalue} size="large" style={{marginLeft:"10px",fontSize:"20px"}}>
             <Radio style={radioStyle} value={"WhiteDensity"} size="large">
-            white population density  
+            White 
             </Radio>
             <Radio style={radioStyle} value={"AsianDensity"} size="large">
-            Asian population density  
+            Asian
             </Radio>
             <Radio style={radioStyle} value={"AfricanAmericandensity"} size="large">
-            Black population density  
+            Black 
             </Radio>
             <Radio style={radioStyle} value={"AmericanIndian"} size="large">
-            American Indian Population density
+            American Indian
             </Radio>
-            <Radio style={radioStyle} value={"populationDensity"} size="large">
-            Total Population density
-            </Radio>
-            <Radio style={radioStyle} value={"DemocraticRepublican"} size="large">
-            Democratic-Republican
+            <Radio style={radioStyle} value={"otherDensity"} size="large">
+            Other race
             </Radio>
           </Radio.Group>
 
             <br/><br/><br/>
-          <p style={{marginLeft:"10px",fontSize:"20px"}}>Level</p>
+          <p style={{marginLeft:"10px",fontSize:"20px"}}>Filter Boundary </p>
           <Radio.Group onChange={this.levelOnChange} value={levelvalue} size="large" style={{marginLeft:"10px",fontSize:"20px"}}>
             <Radio style={radioStyle} value={"district"} size="large">
-            district
+            District
             </Radio>
             <Radio style={radioStyle} value={"precinct"} size="large">
-            precinct
+            Precinct
             </Radio>
             
           </Radio.Group>

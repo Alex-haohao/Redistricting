@@ -3,11 +3,11 @@ import tempStatic from '../static/resultexample.json'
 import lodash from 'lodash'
 
 
-const flashMessages = (state = tempStatic,action) =>{
+const TotalResult = (state = tempStatic,action) =>{
     switch(action.type){
         case ADD:
             let newState = lodash.cloneDeep(state)
-            newState.features.push(action.data)
+            newState.features.unshift(action.data)
             return newState
 
             case DELETE:
@@ -27,4 +27,4 @@ const flashMessages = (state = tempStatic,action) =>{
     }
 }
 
-export default flashMessages
+export default TotalResult

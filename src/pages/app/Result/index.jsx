@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ResultBox from "./ResultBox"
 
-// import textdata from "../../../static/resultexample.json"
 import * as mapAction from '../../../actions/mapAction'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
+
 
 
 class Result extends React.Component {
@@ -15,14 +15,18 @@ class Result extends React.Component {
 
 
   render() {
-    let data = this.props.TotalResult.features
+       
+
+    let data = this.props.resData
+    console.log(data)
+
     return (
 
 
       <div>
         {
           data.map((element) => {
-            return <ResultBox data={element} key={element.jobid} />
+            return <ResultBox data={element} key={element.jobId} />
           })
         }
 
