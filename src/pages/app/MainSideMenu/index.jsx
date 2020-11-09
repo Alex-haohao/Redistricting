@@ -67,7 +67,7 @@ class Sidermenu extends React.Component {
         <Tabs
           activeKey={this.props.MapDisplay.sidemenu.toString()}
           onChange={key => {
-            if (key == 2) {
+            if (this.props.MapDisplay.sidemenu.toString() == "2") {
               console.log("haah")
               api.jobs.getJob()
                 .then(res => res.json())

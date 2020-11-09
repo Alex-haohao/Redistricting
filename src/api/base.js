@@ -1,7 +1,8 @@
 const base = {
     baseUrl:"http://localhost:8081",
     jobs:"/api/jobs",
-    job:"/api/job"
+    job:"/api/job",
+    map:"api/state/"
 }
 
 export default base

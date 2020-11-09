@@ -1,8 +1,6 @@
 import React, {createRef} from 'react';
 import './style.less'
 import StateGeoData from '../../static/stateGeoJson'
-import GAGeoData from '../../static/GA_precincts16.json'
-// import newStateGeoData from '../../s'
 
 import { Map, TileLayer,GeoJSON} from 'react-leaflet'
 
@@ -13,7 +11,7 @@ import * as mapAction from '../../actions/mapAction'
 import Description from './Description/precinctDescription'
 import StateDescription from './Description/StateDescription'
 import shortid from 'shortid'
-
+import api from '../../api'
 
 const DEFAULT_VIEWPORT = {
     center: [37.8, -96],
@@ -145,12 +143,15 @@ class leafletMap extends React.Component {
 
        
         if(feature.properties.NAME === "Georgia"){
-         this.props.mapAction.changeMapState({
-          center: [32.69020691781246,-83.58756508528708],
-          zoom: 7,
-          position:"GA",
-          geodata: GAGeoData,
-          geokey : shortid.generate()
+          api.map.getMap("georgia").then(res => res.json())
+        .then(data => {
+          this.props.mapAction.changeMapState({
+            center: [32.69020691781246,-83.58756508528708],
+            zoom: 7,
+            position:"GA",
+            geodata: data,
+            geokey : shortid.generate()
+          })
         })
       }
       

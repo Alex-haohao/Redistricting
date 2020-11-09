@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux'
 import { Menu, Dropdown, Row, Col, } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import MapDisplay from '../Tab2'
-import gageodata from '../../../../static/GA_precincts16.json'
-
+import shortid from 'shortid'
+import api from "../../../../api"
 import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 
@@ -26,12 +26,19 @@ class Tab1 extends React.Component {
   }
 
   handleZoomGeorgia = (event) => {
-    this.props.mapAction.changeMapState({
-      center: [32.69020691781246, -83.58756508528708],
-      zoom: 7,
-      position: "GA",
-      geodata: gageodata
+
+    api.map.getMap("georgia").then(res => res.json())
+    .then(data => {
+      this.props.mapAction.changeMapState({
+        center: [32.69020691781246,-83.58756508528708],
+        zoom: 7,
+        position:"GA",
+        geodata: data,
+        geokey : shortid.generate()
+      })
     })
+  
+
   }
 
   handleZoomLouisiana = (event) => {

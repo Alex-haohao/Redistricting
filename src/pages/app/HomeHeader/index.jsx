@@ -10,7 +10,7 @@ export default class HomeHeader extends React.Component {
 
             <div className="home-header">
         <div className="home-header-title"><Link to="/">Team Seahawks</Link></div>
-        <div className="home-header-subtitle"><p>GUI test</p></div>
+        <div className="home-header-subtitle"><p>US Congressional Districting</p></div>
         <div className="home-header-nav">
           <div className="home-header-nav-item"><Link to="/">Home</Link></div>
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {addResult,deleteResult}  from '../../../../actions/totalResult'
-
+import api from "../../../../api"
 
 class modal extends React.Component {
   state = {
@@ -35,9 +35,13 @@ class modal extends React.Component {
         visible: false,
         confirmLoading: false,
       });
+
       this.props.deleteResult({
         jobid: this.props.jobid
 })
+      
+
+
     }, 2000);
   };
 

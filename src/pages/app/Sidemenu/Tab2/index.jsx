@@ -5,7 +5,6 @@ import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import { Radio } from 'antd';
 import { Layout,Button } from 'antd';
-import GAGeoData from '../../../../static/GA_precincts16.json'
 import stateGeoData from '../../../../static/stateGeoJson'
 import shortid from "shortid"
 const {Content } = Layout;
@@ -32,10 +31,10 @@ class Tab2 extends React.Component{
         })
 
         this.props.mapAction.changeMapState({
-          center: [32.69020691781246,-83.58756508528708],
+          center: this.props.Mapstate.center,
           zoom: 7,
-          position:"GA",
-          geodata: GAGeoData,
+          position:this.props.Mapstate.position,
+          geodata: this.props.Mapstate.geodata,
           geokey : shortid.generate()
         })
 
