@@ -12,6 +12,7 @@ import * as mapAction from '../../actions/mapAction'
 
 import Description from './Description/precinctDescription'
 import StateDescription from './Description/StateDescription'
+import shortid from 'shortid'
 
 
 const DEFAULT_VIEWPORT = {
@@ -77,12 +78,65 @@ class leafletMap extends React.Component {
     };
   };
 
+  
+
 
   onEachFeature(feature, layer) {
     layer.options.opacity = 0.5
-    // let temp = layer.options.color
     let tempfillcolor = layer.options.fillColor
     let tempopacity = layer.options.opacity
+    ////////////////////HEAT MAP////////////////////////////////////////////////////////
+    function heatMapColorforValue(value){
+      var h = (1.0 - value) * 240
+      return "hsl(" + h + ", 100%, 50%)";
+    }
+
+    if(this.props.MapDisplay.display ==="default"){
+       tempfillcolor = layer.options.fillColor
+       tempopacity = layer.options.opacity
+    }
+    else if(this.props.MapDisplay.display ==="WhiteDensity"){
+      let whitePercentage = feature.properties.WVAP / feature.properties.TOTPOP
+      let res = heatMapColorforValue(whitePercentage)
+      layer.setStyle({fillColor :res})
+       tempfillcolor = layer.options.fillColor
+       tempopacity = layer.options.opacity
+    }
+    else if(this.props.MapDisplay.display ==="AsianDensity"){
+      let whitePercentage = feature.properties.ASIANVAP / feature.properties.TOTPOP
+      let res = heatMapColorforValue(whitePercentage)
+      layer.setStyle({fillColor :res})
+       tempfillcolor = layer.options.fillColor
+       tempopacity = layer.options.opacity
+    }
+    else if(this.props.MapDisplay.display ==="AfricanAmericandensity"){
+      let whitePercentage = feature.properties.BVAP / feature.properties.TOTPOP
+      let res = heatMapColorforValue(whitePercentage)
+      layer.setStyle({fillColor :res})
+       tempfillcolor = layer.options.fillColor
+       tempopacity = layer.options.opacity
+    }
+    else if(this.props.MapDisplay.display ==="AmericanIndian"){
+      let whitePercentage = feature.properties.AMINVAP / feature.properties.TOTPOP
+      let res = heatMapColorforValue(whitePercentage)
+      layer.setStyle({fillColor :res})
+       tempfillcolor = layer.options.fillColor
+       tempopacity = layer.options.opacity
+    }
+    else if(this.props.MapDisplay.display ==="otherDensity"){
+      let whitePercentage = feature.properties.OTHERVAP / feature.properties.TOTPOP
+      let res = heatMapColorforValue(whitePercentage)
+      layer.setStyle({fillColor :res})
+       tempfillcolor = layer.options.fillColor
+       tempopacity = layer.options.opacity
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    
+    // let temp = layer.options.color
+    
       
 
     layer.on({
@@ -91,15 +145,12 @@ class leafletMap extends React.Component {
 
        
         if(feature.properties.NAME === "Georgia"){
-        this.setState({ 
-          geodata: GAGeoData,
-          geokey:"GA-key",
-         })
-
          this.props.mapAction.changeMapState({
           center: [32.69020691781246,-83.58756508528708],
           zoom: 7,
-          position:"GA"
+          position:"GA",
+          geodata: GAGeoData,
+          geokey : shortid.generate()
         })
       }
       
@@ -151,8 +202,8 @@ class leafletMap extends React.Component {
   
 
   render() {
-    let geodata = this.state.geodata;
-    let geokey = this.state.geokey;
+    let geodata = this.props.Mapstate.geodata;
+    let geokey = this.props.Mapstate.geokey;
 
     if(this.props.Mapstate.position ==="US"){
       geodata = StateGeoData;
@@ -209,6 +260,7 @@ const mapDispatchToProps = (dispatch) =>{
 const mapStateToProps =(state)=>{
     return{
         Mapstate:state.Mapstate,
+        MapDisplay:state.MapDisplay
     }
 }
 

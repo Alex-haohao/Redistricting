@@ -6,7 +6,6 @@ import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as PopUpAction from '../../../../actions/showPopUp'
 import { message, InputNumber } from 'antd';
 import { Select, Layout, Slider, Row, Col, Button, Progress } from 'antd';
-import shortid from 'shortid'
 import { addResult, deleteResult } from '../../../../actions/totalResult'
 import api from '../../../../api'
 
@@ -72,7 +71,12 @@ class Tab3 extends React.Component {
         //     }
         // })
 
-        const data = {state: "GEORGIA",
+        let submitState = ""
+        if(this.props.Mapstate.position === "GA"){
+            submitState = "GEORGIA"
+        }
+
+        const data = {state: submitState,
             numberOfDistrictings: this.state.PlanNuminputValue,
             populationDifference: this.state.PopDiffinputValue,
             compactnessGoal: this.state.CompactnessinputValue,
@@ -182,7 +186,9 @@ class Tab3 extends React.Component {
                 <Row style={{ marginTop: 15 }}>
                     <Col span={3}></Col>
                     <Col span={18}>
-                        <Select defaultValue="Hispanic" style={{ width: 240 }} onChange={this.handleGroupChange}>
+                        <Select defaultValue="Hispanic" style={{ width: 240 }} onChange={this.handleGroupChange}
+                        mode="multiple"
+                        allowClear>
                             <Option value="Hispanic">Hispanic</Option>
                             <Option value="Black">Black</Option>
                             <Option value="Asian">Asian</Option>

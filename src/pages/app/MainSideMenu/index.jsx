@@ -4,9 +4,13 @@ import MapControl from "../Sidemenu"
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
+import * as mapAction from '../../../actions/mapAction'
+
 import Summary from "../Summary/index"
 import History from "../Result"
 import api from "../../../api"
+import stateGeoData from "../../../static/stateGeoJson"
+
 
 const { TabPane } = Tabs;
 const { Sider } = Layout;
@@ -23,7 +27,13 @@ class Sidermenu extends React.Component {
 
   handleChangetoMap = () => {
     this.props.mapDisplayAction.changeMapDisplay({
-      isShow: true
+      isShow: true,
+    })
+    this.props.mapAction.changeMapState({
+      center: [37.8, -96],
+      zoom: 4,
+      position: "US",
+      geodata:stateGeoData
     })
   }
 
@@ -98,6 +108,7 @@ class Sidermenu extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     mapDisplayAction: bindActionCreators(mapDisplayAction, dispatch),
+    mapAction:bindActionCreators(mapAction,dispatch),
   }
 }
 

@@ -5,6 +5,9 @@ import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import { Radio } from 'antd';
 import { Layout,Button } from 'antd';
+import GAGeoData from '../../../../static/GA_precincts16.json'
+import stateGeoData from '../../../../static/stateGeoJson'
+import shortid from "shortid"
 const {Content } = Layout;
 
 
@@ -13,7 +16,7 @@ class Tab2 extends React.Component{
    constructor(){
        super()
     this.state = {
-        colorvalue: 1,
+        colorvalue: "default",
         levelvalue: 1,
       };
    }
@@ -22,10 +25,25 @@ class Tab2 extends React.Component{
         this.setState({
           colorvalue: e.target.value,
         });
+
+        this.props.mapDisplayAction.changeMapDisplay({
+          display: e.target.value,
+          isShow : true
+        })
+
+        this.props.mapAction.changeMapState({
+          center: [32.69020691781246,-83.58756508528708],
+          zoom: 7,
+          position:"GA",
+          geodata: GAGeoData,
+          geokey : shortid.generate()
+        })
+
       };
 
       levelOnChange = e => {
         this.setState({
+          
           levelvalue: e.target.value,
         });
       };
@@ -34,8 +52,15 @@ class Tab2 extends React.Component{
         this.props.mapAction.changeMapState({
             center: [37.8, -96],
             zoom: 4,
-            position:"US"
+            position:"US",
+            geodata:stateGeoData
           })
+          
+          this.props.mapDisplayAction.changeMapDisplay({
+            display: "default",
+            isShow : true
+          })
+
         this.setState({
             colorvalue:0,
             levelvalue:0
@@ -57,7 +82,11 @@ class Tab2 extends React.Component{
    
 
             <p style={{marginLeft:"10px",fontSize:"20px"}}> Display map by population density</p>
-          <Radio.Group onChange={this.colorOnChange} value={colorvalue} size="large" style={{marginLeft:"10px",fontSize:"20px"}}>
+          <Radio.Group onChange={this.colorOnChange}  value={colorvalue} size="large" style={{marginLeft:"10px",fontSize:"20px"}}
+          >
+          <Radio style={radioStyle} value={"default"} size="large">
+          default 
+            </Radio>
             <Radio style={radioStyle} value={"WhiteDensity"} size="large">
             White 
             </Radio>

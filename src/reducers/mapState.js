@@ -7,6 +7,7 @@ const initState = {
     zoom: 4,
     position:"US",
     mode:"state",
+    geokey:"abcde"
   }
 
 const geomap = (state=initState,action) =>{
@@ -17,7 +18,8 @@ const geomap = (state=initState,action) =>{
                 zoom:action.data.zoom,
                 position:action.data.position,
                 geodata: action.data.geodata ? action.data.geodata : stateGeoData,
-                mode : action.data.mode
+                geokey:action.data.geokey? action.data.geokey:"abcde",
+                mode : action.data.mode ? action.data.mode : "precinct"
             }
     
         default:
