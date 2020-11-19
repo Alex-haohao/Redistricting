@@ -10,11 +10,10 @@ const jobs = {
     getJob(){
         return getData(base.jobs)
     }
-,
+    ,
     deleteJob(data){
-        return deleteData(base.job+"?jobId="+data)
+        return deleteData(base.job + '/' + data)
     }
-
 }
 
 

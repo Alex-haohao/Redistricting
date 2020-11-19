@@ -11,7 +11,7 @@ import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 
 
-class Tab1 extends React.Component {
+class MapDisplay1 extends React.Component {
 
   handleZoomUS = (event) => {
     this.props.mapAction.changeMapState({
@@ -100,4 +100,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tab1);
+export default connect(mapStateToProps, mapDispatchToProps)(MapDisplay1);

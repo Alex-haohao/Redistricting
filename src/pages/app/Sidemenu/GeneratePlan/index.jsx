@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as PopUpAction from '../../../../actions/showPopUp'
-import { message, InputNumber } from 'antd';
+import { InputNumber } from 'antd';
 import { Select, Layout, Slider, Row, Col, Button, Progress } from 'antd';
 import { addResult, deleteResult } from '../../../../actions/totalResult'
 import api from '../../../../api'
@@ -12,8 +12,7 @@ import api from '../../../../api'
 const { Content } = Layout;
 const { Option } = Select;
 
-class Tab3 extends React.Component {
-
+class GeneratePlan extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -60,7 +59,6 @@ class Tab3 extends React.Component {
     }
 
     PopUpHandler = () => {
-
         const data = {
             state: this.state.StateName,
             numberOfDistrictings: this.state.PlanNuminputValue,
@@ -72,8 +70,6 @@ class Tab3 extends React.Component {
         api.jobs.addJob(data).then(res => {
             console.log(res)
         })
-        //////////////////////////////////////////////////////////////////////////////
-
 
         let timer = setInterval(() => {
             let percent = this.state.percent + 10;
@@ -81,36 +77,22 @@ class Tab3 extends React.Component {
                 percent = 100;
             }
             this.setState({ percent });
-
             if (this.state.percent === 100) {
                 setTimeout(() => {
-
                     clearInterval(timer);
-
                     this.props.PopUpAction.changePopUp({
                         isPopUp: true,
                     })
-
                     this.setState({ percent: 0 });
-
                 }, 500);
             }
-
         }, 200);
-
-
-
     }
-
 
     render() {
         let { PlanNuminputValue, CompactnessinputValue, PopDiffinputValue } = this.state;
-
-
         return (
-
             <Content>
-
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>State Name: </span>
                         <Select defaultValue="GEORGIA" style={{ width: 120 }} onChange={this.handleStateChange}>
                             <Option value="GEORGIA">GEORGIA</Option>
@@ -119,10 +101,9 @@ class Tab3 extends React.Component {
                         </Select>
                         <br /><br />
 
-
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Plan Numbers: </span>
                 <InputNumber size="large" min={100} max={10000} value={PlanNuminputValue} onChange={this.handlePlanNumChange} />
-                <br />
+                    <br />
                 <Row>
                     <Col span={3}></Col>
                     <Col span={18}>
@@ -134,10 +115,6 @@ class Tab3 extends React.Component {
                         />
                     </Col>
                 </Row>
-
-
-
-
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Population Difference: </span>
                 <InputNumber size="large" min={100} max={10000} value={PopDiffinputValue} onChange={this.handlePopDiffChange} />
@@ -154,10 +131,6 @@ class Tab3 extends React.Component {
                     </Col>
                 </Row>
 
-
-
-
-
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Compactness: </span>
                 <InputNumber size="large" min={0} max={1} value={CompactnessinputValue} onChange={this.handleCompactnessChange} />
                 <br />
@@ -173,9 +146,6 @@ class Tab3 extends React.Component {
                         />
                     </Col>
                 </Row>
-
-
-
 
                 <br></br>
                 <span style={{ fontSize: 20, marginLeft: 40 }}>minority group selection: </span>
@@ -196,10 +166,6 @@ class Tab3 extends React.Component {
                     </Col>
                 </Row>
 
-
-
-
-
                 <br />
                 <Row>
                     <Col span={8}></Col>
@@ -208,24 +174,16 @@ class Tab3 extends React.Component {
                     </Col>
                 </Row>
                 <br />
-
                 <Row>
                     <Col span={2}></Col>
                     <Col span={18}>
                         <Progress percent={this.state.percent} />
                     </Col>
                 </Row>
-
             </Content>
-
-
-
         );
     }
 }
-
-
-
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -244,4 +202,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tab3);
+export default connect(mapStateToProps, mapDispatchToProps)(GeneratePlan);

@@ -32,7 +32,7 @@ class Result extends React.Component {
       <div>
         {
           data.map((element) => {
-            return <ResultBox data={element} key={element.jobId} />
+            return <ResultBox handleCancelCallback={this.props.handleCancelCallback} data={element} key={element.jobId} />
           })
         }
       </div>
@@ -44,7 +44,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     mapAction: bindActionCreators(mapAction, dispatch),
     mapDisplayAction: bindActionCreators(mapDisplayAction, dispatch),
-
   }
 }
 
@@ -53,7 +52,6 @@ const mapStateToProps = (state) => {
     Mapstate: state.Mapstate,
     MapDisplay: state.MapDisplay,
     TotalResult: state.TotalResult
-
   }
 }
 

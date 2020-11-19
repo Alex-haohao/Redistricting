@@ -25,6 +25,16 @@ class Sidermenu extends React.Component {
     }
   }
 
+  handleCancelCallback = () =>{
+    api.jobs.getJob()
+    .then(res => res.json())
+    .then(data => {
+      this.setState({
+        resData: data
+      })
+    })
+  }
+
   handleChangetoMap = () => {
     this.props.mapDisplayAction.changeMapDisplay({
       isShow: true,
@@ -71,7 +81,7 @@ class Sidermenu extends React.Component {
             <MapControl></MapControl>
           </TabPane>
           <TabPane tab="History" key="2" >
-            {this.state.resData.length != 0 ? <History resData={this.state.resData}></History> : null}
+            {this.state.resData.length != 0 ? <History handleCancelCallback={this.handleCancelCallback} resData={this.state.resData}></History> : null}
           </TabPane>
           <TabPane tab="Summary" key="3" >
             <Summary></Summary>

@@ -2,7 +2,7 @@ import { Modal, Button } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {addResult,deleteResult}  from '../../../../actions/totalResult'
+import { addResult, deleteResult } from '../../../../actions/totalResult'
 import api from "../../../../api"
 
 class modal extends React.Component {
@@ -23,9 +23,6 @@ class modal extends React.Component {
   handleOk = (e) => {
     e.preventDefault();
     e.stopPropagation()
-
-   
-
     this.setState({
       ModalText: 'You delete the job successfully',
       confirmLoading: true,
@@ -36,13 +33,16 @@ class modal extends React.Component {
         confirmLoading: false,
       });
 
-      this.props.deleteResult({
-        jobid: this.props.jobid
-})
+      api.jobs.deleteJob(this.props.jobid)
+      .then(res => {console.log(res)
+        this.props.handleCancelCallback()
+      }
+      )
+
       
-
-
     }, 2000);
+
+    
   };
 
   handleCancel = (e) => {
@@ -77,16 +77,16 @@ class modal extends React.Component {
 
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        addResult: bindActionCreators(addResult, dispatch),
-        deleteResult: bindActionCreators(deleteResult, dispatch),
-    }
+  return {
+    addResult: bindActionCreators(addResult, dispatch),
+    deleteResult: bindActionCreators(deleteResult, dispatch),
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        MapDisplay: state.MapDisplay
-    }
+  return {
+    MapDisplay: state.MapDisplay
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(modal);

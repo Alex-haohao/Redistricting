@@ -1,12 +1,9 @@
-import qs from "querystring"
-
 export function getData(url) {
     const result = fetch(url);
     return result;
 }
 
 export function postData(url,data) {
-    console.log("hahahahahahah")
     console.log(JSON.stringify(data))
     const result = fetch(url, {
         method: 'post',

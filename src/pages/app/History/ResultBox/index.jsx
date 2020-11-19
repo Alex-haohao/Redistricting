@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as resultAction from '../../../../actions/resultAction'
 import { Card } from 'antd';
-import DeleteModal from "../PopUpModel"
+import DeleteModal from "../DeleteModal"
 import CancelModal from "../CancelPopUp"
 import './style.less'
 
@@ -51,7 +51,9 @@ class ResultBox extends React.Component {
                      jobid = {this.props.data.jobId}>
                      </CancelModal>
                     <DeleteModal onClick={e =>{e.stopPropagation()}}
-                     jobid = {this.props.data.jobId}></DeleteModal> 
+                     jobid = {this.props.data.jobId}
+                     handleCancelCallback={this.props.handleCancelCallback}
+                     ></DeleteModal> 
                     </div>
                  }
                 style={{ width: 300, marginLeft: ' 20px', marginBottom: '20px' }}>
