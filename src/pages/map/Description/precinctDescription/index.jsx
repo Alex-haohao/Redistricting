@@ -7,7 +7,6 @@ export default class Description extends React.Component {
     state = {
         size: 'default',
       };
-    
       onChange = e => {
         console.log('size checked', e.target.value);
         this.setState({

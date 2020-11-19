@@ -1,44 +1,24 @@
 import React from 'react';
 import { Layout, Tabs } from 'antd';
-import Tab1 from "./Tab1"
-import Tab3 from "./Tab3"
-
+import MapDisplay from "./MapDisplay1"
+import GeneratePlan from "./GeneratePlan"
 
 const { TabPane } = Tabs;
 const { Sider } = Layout;
 
-
 export default class Sidermenu extends React.Component {
-
-   
-
     render() {
-
         return (
-
-
-
             <Sider className="site-layout-background" width={340}>
-
-
-
-                <Tabs defaultActiveKey="1" centered style={{ "backgroundColor": "white",height:"100%" }} >
+                <Tabs defaultActiveKey="1" centered style={{ "backgroundColor": "white", height: "100%" }} >
                     <TabPane tab="Map Display" key="1">
-                        <Tab1></Tab1>
+                        <MapDisplay></MapDisplay>
                     </TabPane>
                     <TabPane tab="Generate Plan" key="2" >
-                        <Tab3></Tab3>
+                        <GeneratePlan></GeneratePlan>
                     </TabPane>
                 </Tabs>
-
-
-
-
-
-
             </Sider>
-
         )
-
     }
 }

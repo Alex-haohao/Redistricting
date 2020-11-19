@@ -11,7 +11,6 @@ const {Content } = Layout;
 
 
 class Tab2 extends React.Component{
-
    constructor(){
        super()
     this.state = {
@@ -42,7 +41,6 @@ class Tab2 extends React.Component{
 
       levelOnChange = e => {
         this.setState({
-          
           levelvalue: e.target.value,
         });
       };
@@ -115,9 +113,6 @@ class Tab2 extends React.Component{
             
           </Radio.Group>
           </Content>
-
-
-
         );
       }
 }
@@ -129,7 +124,6 @@ const mapDispatchToProps = (dispatch) =>{
     return {
         mapDisplayAction:bindActionCreators(mapDisplayAction,dispatch),
         mapAction:bindActionCreators(mapAction,dispatch),
-
     }
 }
 

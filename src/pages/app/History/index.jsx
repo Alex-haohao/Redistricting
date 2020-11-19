@@ -1,46 +1,44 @@
 import React from 'react';
-
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ResultBox from "./ResultBox"
-
+import api from "../../../api"
 import * as mapAction from '../../../actions/mapAction'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 
-
-
 class Result extends React.Component {
 
+  constructor() {
+    super()
+    this.state = {
+      initeData: [],
+    };
+  }
 
-
+  componentWillMount() {
+    api.jobs.getJob()
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          initeData: data
+        })
+      })
+  }
 
   render() {
-       
-
-    let data = this.props.resData
+    let data = this.props.resData ? this.props.resData : this.state.initeData
     console.log(data)
-
     return (
-
-
       <div>
         {
           data.map((element) => {
             return <ResultBox data={element} key={element.jobId} />
           })
         }
-
-
-
-
       </div>
-
     )
   }
 }
-
-
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -54,7 +52,7 @@ const mapStateToProps = (state) => {
   return {
     Mapstate: state.Mapstate,
     MapDisplay: state.MapDisplay,
-    TotalResult:state.TotalResult
+    TotalResult: state.TotalResult
 
   }
 }

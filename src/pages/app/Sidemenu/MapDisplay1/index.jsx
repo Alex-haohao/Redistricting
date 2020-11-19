@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Menu, Dropdown, Row, Col, } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import MapDisplay from '../Tab2'
+import MapDisplay from '../MapDisplay2'
 import shortid from 'shortid'
 import api from "../../../../api"
 import * as mapAction from '../../../../actions/mapAction'
@@ -13,32 +13,25 @@ import * as mapDisplayAction from '../../../../actions/mapDisplay'
 
 class Tab1 extends React.Component {
 
-
-
   handleZoomUS = (event) => {
     this.props.mapAction.changeMapState({
       center: [37.8, -96],
       zoom: 4,
       position: "US"
     })
-
-
   }
 
   handleZoomGeorgia = (event) => {
-
     api.map.getMap("georgia").then(res => res.json())
-    .then(data => {
-      this.props.mapAction.changeMapState({
-        center: [32.69020691781246,-83.58756508528708],
-        zoom: 7,
-        position:"GA",
-        geodata: data,
-        geokey : shortid.generate()
+      .then(data => {
+        this.props.mapAction.changeMapState({
+          center: [32.69020691781246, -83.58756508528708],
+          zoom: 7,
+          position: "GA",
+          geodata: data,
+          geokey: shortid.generate()
+        })
       })
-    })
-  
-
   }
 
   handleZoomLouisiana = (event) => {
@@ -59,7 +52,6 @@ class Tab1 extends React.Component {
 
 
   render() {
-
     const menu = (
       <Menu
         mode="inline"
@@ -73,16 +65,13 @@ class Tab1 extends React.Component {
       </Menu>
     );
 
-
     return (
-
-
       <div>
-        <Row style={{marginTop:"20px",marginBottom:"50px"}}>
+        <Row style={{ marginTop: "20px", marginBottom: "50px" }}>
           <Col span={6}></Col>
           <Col span={18}>
-            <Dropdown overlay={menu} size="large" > 
-              <a className="ant-dropdown-link" style={{fontSize:"24px"}}>
+            <Dropdown overlay={menu} size="large" >
+              <a className="ant-dropdown-link" style={{ fontSize: "24px" }}>
                 State selection <DownOutlined />
               </a>
             </Dropdown>
@@ -90,7 +79,6 @@ class Tab1 extends React.Component {
         </Row>
         <MapDisplay></MapDisplay>
       </div>
-
     )
   }
 }
@@ -102,7 +90,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     mapAction: bindActionCreators(mapAction, dispatch),
     mapDisplayAction: bindActionCreators(mapDisplayAction, dispatch),
-
   }
 }
 
@@ -110,7 +97,6 @@ const mapStateToProps = (state) => {
   return {
     Mapstate: state.Mapstate,
     MapDisplay: state.MapDisplay
-
   }
 }
 

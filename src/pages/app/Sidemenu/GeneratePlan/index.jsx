@@ -17,36 +17,43 @@ class Tab3 extends React.Component {
     constructor() {
         super()
         this.state = {
-            colorvalue: 1,
-            levelvalue: 1,
+            StateName: 'GEORGIA',
             PlanNuminputValue: 1,
             PopDiffinputValue: 0,
             CompactnessinputValue: 0,
-            MinorityGroup: "Black",
+            MinorityGroup: ['HISPANIC'],
             percent: 0,
+            colorvalue: 1,
+            levelvalue: 1,
         };
     }
 
-    onPlanNumChange = (value) => {
+    handleStateChange = (value) => {
+        this.setState({
+            StateName: value,
+        });
+    }
+
+    handlePlanNumChange = (value) => {
         this.setState({
             PlanNuminputValue: value,
         });
     }
 
-    onPopDiffChange = (value) => {
+    handlePopDiffChange = (value) => {
         this.setState({
             PopDiffinputValue: value,
         });
     }
 
-    onCompactnessChange = (value) => {
+    handleCompactnessChange = (value) => {
         this.setState({
             CompactnessinputValue: value,
         });
     }
 
     handleGroupChange = (value) => {
-        console.log(`selected ${value}`);
+        console.log(value);
         this.setState({
             MinorityGroup: value,
         });
@@ -54,36 +61,15 @@ class Tab3 extends React.Component {
 
     PopUpHandler = () => {
 
-        //////////////////////////////////////////////////////////////////////////////
-        // this part will change after we connect the real backend
-        if(this.props.Mapstate.position ==="US"){
-            message.warning('You did not select any state');
-            return
-        }
-
-        // this.props.addResult({
-        //     jobid: shortid.generate(), properties: {
-        //         state: this.props.Mapstate.position,
-        //         Plan: this.state.PlanNuminputValue,
-        //         PopDiff: this.state.PopDiffinputValue,
-        //         compactness: this.state.CompactnessinputValue,
-        //         Minority: this.state.MinorityGroup,
-        //     }
-        // })
-
-        let submitState = ""
-        if(this.props.Mapstate.position === "GA"){
-            submitState = "GEORGIA"
-        }
-
-        const data = {state: submitState,
+        const data = {
+            state: this.state.StateName,
             numberOfDistrictings: this.state.PlanNuminputValue,
             populationDifference: this.state.PopDiffinputValue,
             compactnessGoal: this.state.CompactnessinputValue,
-            // Minority: this.state.MinorityGroup,
+            minorities: this.state.MinorityGroup,
         }
 
-        api.jobs.addJob(data).then(res =>{
+        api.jobs.addJob(data).then(res => {
             console.log(res)
         })
         //////////////////////////////////////////////////////////////////////////////
@@ -124,8 +110,18 @@ class Tab3 extends React.Component {
         return (
 
             <Content>
+
+                <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>State Name: </span>
+                        <Select defaultValue="GEORGIA" style={{ width: 120 }} onChange={this.handleStateChange}>
+                            <Option value="GEORGIA">GEORGIA</Option>
+                            <Option value="LOUISANA">LOUISANA</Option>
+                            <Option value="MISSISSIPPI">MISSISSIPPI</Option>
+                        </Select>
+                        <br /><br />
+
+
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Plan Numbers: </span>
-                <InputNumber size="large" min={100} max={10000} value={PlanNuminputValue} onChange={this.onPlanNumChange} />
+                <InputNumber size="large" min={100} max={10000} value={PlanNuminputValue} onChange={this.handlePlanNumChange} />
                 <br />
                 <Row>
                     <Col span={3}></Col>
@@ -133,7 +129,7 @@ class Tab3 extends React.Component {
                         <Slider
                             min={100}
                             max={10000}
-                            onChange={this.onPlanNumChange}
+                            onChange={this.handlePlanNumChange}
                             value={typeof PlanNuminputValue === 'number' ? PlanNuminputValue : 0}
                         />
                     </Col>
@@ -144,7 +140,7 @@ class Tab3 extends React.Component {
 
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Population Difference: </span>
-                <InputNumber size="large" min={100} max={10000} value={PopDiffinputValue} onChange={this.onPopDiffChange} />
+                <InputNumber size="large" min={100} max={10000} value={PopDiffinputValue} onChange={this.handlePopDiffChange} />
                 <br />
                 <Row>
                     <Col span={3}></Col>
@@ -152,7 +148,7 @@ class Tab3 extends React.Component {
                         <Slider
                             min={100}
                             max={10000}
-                            onChange={this.onPopDiffChange}
+                            onChange={this.handlePopDiffChange}
                             value={typeof PopDiffinputValue === 'number' ? PopDiffinputValue : 0}
                         />
                     </Col>
@@ -163,7 +159,7 @@ class Tab3 extends React.Component {
 
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Compactness: </span>
-                <InputNumber size="large" min={0} max={1} value={CompactnessinputValue} onChange={this.onCompactnessChange} />
+                <InputNumber size="large" min={0} max={1} value={CompactnessinputValue} onChange={this.handleCompactnessChange} />
                 <br />
                 <Row>
                     <Col span={3}></Col>
@@ -172,7 +168,7 @@ class Tab3 extends React.Component {
                             step={0.01}
                             min={0}
                             max={1}
-                            onChange={this.onCompactnessChange}
+                            onChange={this.handleCompactnessChange}
                             value={typeof CompactnessinputValue === 'number' ? CompactnessinputValue : 0}
                         />
                     </Col>
@@ -186,13 +182,13 @@ class Tab3 extends React.Component {
                 <Row style={{ marginTop: 15 }}>
                     <Col span={3}></Col>
                     <Col span={18}>
-                        <Select defaultValue="Hispanic" style={{ width: 240 }} onChange={this.handleGroupChange}
-                        mode="multiple"
-                        allowClear>
-                            <Option value="Hispanic">Hispanic</Option>
-                            <Option value="Black">Black</Option>
-                            <Option value="Asian">Asian</Option>
-                            <Option value="American Indian and Alaska Native">American Indian and Alaska Native</Option>
+                        <Select defaultValue="HISPANIC" style={{ width: 240 }} onChange={this.handleGroupChange}
+                            mode="multiple"
+                            allowClear>
+                            <Option value="HISPANIC">Hispanic</Option>
+                            <Option value="BLACK">Black</Option>
+                            <Option value="ASIAN">Asian</Option>
+                            <Option value="NATIVE">American Indian and Alaska Native</Option>
                             <Option value="Native Hawaiian and Pacific Islander">Native Hawaiian and Pacific Islander</Option>
                             <Option value="Other race">Other race</Option>
                         </Select>
