@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Menu, Dropdown, Row, Col, } from 'antd';
@@ -10,9 +9,7 @@ import api from "../../../../api"
 import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 
-
 class MapDisplay1 extends React.Component {
-
   handleZoomUS = (event) => {
     this.props.mapAction.changeMapState({
       center: [37.8, -96],
@@ -50,7 +47,6 @@ class MapDisplay1 extends React.Component {
     })
   }
 
-
   render() {
     const menu = (
       <Menu
@@ -82,9 +78,6 @@ class MapDisplay1 extends React.Component {
     )
   }
 }
-
-
-
 
 const mapDispatchToProps = (dispatch) => {
   return {

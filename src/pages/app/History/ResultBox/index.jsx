@@ -35,11 +35,6 @@ class ResultBox extends React.Component {
         })
     }
 
-    handleDelete = () => {
-
-    }
-
-
     render() {
         return (
             <Card
@@ -65,7 +60,6 @@ class ResultBox extends React.Component {
                 <p style={{ fontSize: "18px" }}>Population Difference: {this.props.data.populationDifference}</p>
             </Card>
         )
-
     }
 }
 

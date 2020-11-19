@@ -7,7 +7,7 @@ import {
   Annotation,
   Point,
   Axis,
-  Legend
+  // Legend
 } from "bizcharts";
 import { DataView } from "@antv/data-set";
 import GeorgiaDistrictsDataWithoutGeoposition from "../../../../static/GA_districts_without_geoposition";
@@ -146,7 +146,7 @@ export default class Demo extends React.Component {
 
     // sort the BVAP% 
     BVAPPercentages.sort()
-  
+
     for (let i = 0; i < data.length; i++) {
       data[i]["BVAPPercentage"] = BVAPPercentages[i]
     }
@@ -162,17 +162,17 @@ export default class Demo extends React.Component {
     });
 
     const scale = {
-      x:{
-        alias:'Indexed Districts', // 别名
+      x: {
+        alias: 'Indexed Districts', 
       },
-      BVAPPercentage:{
-        alias:"BVAP%",
+      BVAPPercentage: {
+        alias: "BVAP%",
         min: 0,
         max: 1,
         nice: true
       },
-      range:{
-        alias:"BVAP%",
+      range: {
+        alias: "BVAP%",
         min: 0,
         max: 1,
         nice: true
@@ -187,9 +187,9 @@ export default class Demo extends React.Component {
         scale={scale}
         padding="auto"
       >
-        <Axis name="x" position="bottom" title/>
-        <Axis name="BVAP%" position="left" title/>
-        <Axis name="range" position="right" title/>
+        <Axis name="x" position="bottom" title />
+        <Axis name="BVAP%" position="left" title />
+        <Axis name="range" position="right" title />
 
         <Tooltip
           showTitle={false}
@@ -240,7 +240,6 @@ export default class Demo extends React.Component {
         />
 
         <Interaction type={"active-region"} />
-
         <Annotation.Region
           start={["min", "0.33"]}
           end={["max", "0.5"]}

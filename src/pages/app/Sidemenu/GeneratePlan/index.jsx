@@ -72,7 +72,7 @@ class GeneratePlan extends React.Component {
         })
 
         let timer = setInterval(() => {
-            let percent = this.state.percent + 10;
+            let percent = this.state.percent + 20;
             if (percent > 100) {
                 percent = 100;
             }
@@ -96,10 +96,10 @@ class GeneratePlan extends React.Component {
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>State Name: </span>
                         <Select defaultValue="GEORGIA" style={{ width: 120 }} onChange={this.handleStateChange}>
                             <Option value="GEORGIA">GEORGIA</Option>
-                            <Option value="LOUISANA">LOUISANA</Option>
+                            <Option value="LOUISIANA">LOUISIANA</Option>
                             <Option value="MISSISSIPPI">MISSISSIPPI</Option>
                         </Select>
-                        <br /><br />
+                        <br /><br /><br />
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Plan Numbers: </span>
                 <InputNumber size="large" min={100} max={10000} value={PlanNuminputValue} onChange={this.handlePlanNumChange} />
@@ -115,6 +115,7 @@ class GeneratePlan extends React.Component {
                         />
                     </Col>
                 </Row>
+                <br />
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Population Difference: </span>
                 <InputNumber size="large" min={100} max={10000} value={PopDiffinputValue} onChange={this.handlePopDiffChange} />
@@ -130,6 +131,7 @@ class GeneratePlan extends React.Component {
                         />
                     </Col>
                 </Row>
+                <br />
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Compactness: </span>
                 <InputNumber size="large" min={0} max={1} value={CompactnessinputValue} onChange={this.handleCompactnessChange} />
@@ -148,7 +150,7 @@ class GeneratePlan extends React.Component {
                 </Row>
 
                 <br></br>
-                <span style={{ fontSize: 20, marginLeft: 40 }}>minority group selection: </span>
+                <span style={{ fontSize: 20, marginLeft: 40 }}>Minority Group Selection: </span>
                 <Row style={{ marginTop: 15 }}>
                     <Col span={3}></Col>
                     <Col span={18}>

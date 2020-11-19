@@ -5,34 +5,30 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 import * as mapAction from '../../../actions/mapAction'
-
 import Summary from "../Summary/index"
 import History from "../History"
 import api from "../../../api"
 import stateGeoData from "../../../static/stateGeoJson"
-
-
 const { TabPane } = Tabs;
 const { Sider } = Layout;
 
-class Sidermenu extends React.Component {
-
+class Configuration extends React.Component {
   constructor() {
     super();
     this.state = {
       jobs: [],
-      resData: []
+      historyData: []
     }
   }
 
-  handleCancelCallback = () =>{
+  handleCancelCallback = () => {
     api.jobs.getJob()
-    .then(res => res.json())
-    .then(data => {
-      this.setState({
-        resData: data
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          historyData: data
+        })
       })
-    })
   }
 
   handleChangetoMap = () => {
@@ -70,7 +66,7 @@ class Sidermenu extends React.Component {
               .then(res => res.json())
               .then(data => {
                 this.setState({
-                  resData: data
+                  historyData: data
                 })
               })
           }
@@ -81,7 +77,7 @@ class Sidermenu extends React.Component {
             <MapControl></MapControl>
           </TabPane>
           <TabPane tab="History" key="2" >
-            {this.state.resData.length != 0 ? <History handleCancelCallback={this.handleCancelCallback} resData={this.state.resData}></History> : null}
+            {this.state.historyData.length != 0 ? <History handleCancelCallback={this.handleCancelCallback} historyData={this.state.historyData}></History> : null}
           </TabPane>
           <TabPane tab="Summary" key="3" >
             <Summary></Summary>
@@ -107,4 +103,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidermenu);
+export default connect(mapStateToProps, mapDispatchToProps)(Configuration);

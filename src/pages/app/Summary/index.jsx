@@ -3,13 +3,10 @@ import {connect} from 'react-redux'
 import{bindActionCreators}  from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 import * as resultAction from '../../../actions/resultAction'
-
 import { Card } from 'antd';
-
 const { Meta } = Card;
 
  class Summary extends React.Component {
-
      handleChangetoMap = ()=>{
         this.props.mapDisplayAction.changeMapDisplay({
             isShow: true
@@ -18,19 +15,15 @@ const { Meta } = Card;
 
      handleChangetoPlot =()=>{
          if(this.props.Result.jobid !== -1){
-             console.log("hahahaha")
             this.props.mapDisplayAction.changeMapDisplay({
                 isShow: false,
                 sidemenu:"3",
                 display: this.props.MapDisplay.display,
               })
          }
-        
      }
 
-
     render() {
-
         let jobid = this.props.Result.jobid !== -1 ? "Summary of JobID: "+ this.props.Result.jobid : "Did not choose any job"
         return (
             <Card
@@ -42,7 +35,6 @@ const { Meta } = Card;
             <Meta title={jobid} description="Click card to Show box plot" />
           </Card>
         )
-
     }
 }
 
@@ -50,7 +42,6 @@ const mapDispatchToProps = (dispatch) =>{
     return {
       mapDisplayAction:bindActionCreators(mapDisplayAction,dispatch),
       resultAction: bindActionCreators(resultAction, dispatch),
-
     }
   }
   

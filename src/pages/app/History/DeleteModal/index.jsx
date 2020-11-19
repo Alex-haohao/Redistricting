@@ -7,7 +7,7 @@ import api from "../../../../api"
 
 class modal extends React.Component {
   state = {
-    ModalText: 'Really want to delete is job? This job cannot be recoverd',
+    ModalText: 'Really want to delete this job? This job cannot be recoverd',
     visible: false,
     confirmLoading: false,
   };

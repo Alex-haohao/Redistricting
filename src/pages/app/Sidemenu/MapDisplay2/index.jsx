@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import { Radio } from 'antd';
-import { Layout, Button } from 'antd';
+import { Row, Col, Layout, Button } from 'antd';
 import stateGeoData from '../../../../static/stateGeoJson'
 import shortid from "shortid"
 const { Content } = Layout;
@@ -75,9 +75,12 @@ class MapDisplay2 extends React.Component {
     return (
 
       <Content>
-        <Button onClick={this.handleReset} style={{ width: "100%", marginBottom: "20px" }}>Reset</Button>
-
-
+        <Row>
+          <Col span={7}></Col>
+          <Col span={9}>
+            <Button onClick={this.handleReset} style={{ width: "80%", marginBottom: "20px" }}>Reset</Button>
+          </Col>
+        </Row>
         <p style={{ marginLeft: "10px", fontSize: "20px" }}> Display map by population density</p>
         <Radio.Group onChange={this.colorOnChange} value={colorvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}
         >
