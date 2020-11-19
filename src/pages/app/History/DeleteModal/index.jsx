@@ -34,15 +34,12 @@ class modal extends React.Component {
       });
 
       api.jobs.deleteJob(this.props.jobid)
-      .then(res => {console.log(res)
-        this.props.handleCancelCallback()
-      }
-      )
-
-      
+        .then(res => {
+          console.log(res)
+          this.props.handleCancelCallback()
+        }
+        )
     }, 2000);
-
-    
   };
 
   handleCancel = (e) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Tabs, Button } from 'antd';
-import MapControl from "../Sidemenu"
+import MapControl from "../Configuration"
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
