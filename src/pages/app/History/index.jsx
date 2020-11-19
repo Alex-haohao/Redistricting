@@ -26,7 +26,7 @@ class Result extends React.Component {
   }
 
   render() {
-    let data = this.props.resData ? this.props.resData : this.state.initeData
+    let data = this.props.historyData ? this.props.historyData : this.state.initeData
     console.log(data)
     return (
       <div>
