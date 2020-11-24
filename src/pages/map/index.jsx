@@ -10,6 +10,7 @@ import StateDescription from './Description/StateDescription'
 import shortid from 'shortid'
 import api from '../../api'
 
+
 const DEFAULT_VIEWPORT = {
   center: [37.8, -96],
   zoom: 4,
@@ -196,12 +197,14 @@ class leafletMap extends React.Component {
             descriptionInfo={this.state.descriptionInfo}
           ></Description>
         }
+        
 
         <Map
           viewport={this.props.Mapstate}
           ref={this.mapRef}
           onClick={this.handleClickGetLat.bind(this)}
         >
+
 
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
