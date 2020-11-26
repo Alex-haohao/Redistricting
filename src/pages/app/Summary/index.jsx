@@ -3,8 +3,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 import * as resultAction from '../../../actions/resultAction'
+import * as averageLayerDisplay from '../../../actions/averageLayerDisplay'
+import * as extremeLayerDisplay from '../../../actions/extremeLayerDisplay'
+import * as randomLayerDisplay from '../../../actions/randomLayerDisplay'
 import { Card ,Checkbox} from 'antd';
 import './style.less';
+import shortid from 'shortid'
+import randomPlan from '../../../static/GA_random.json'
+import averagePlan from '../../../static/GA_average.json'
+import extremePlan from '../../../static/GA_extreme.json'
 
 const { Meta } = Card;
 const CheckboxGroup = Checkbox.Group;
@@ -26,6 +33,46 @@ onChange = checkedList => {
   this.setState({
     checkedList
   });
+  
+  if (checkedList.findIndex(element => element === "Average") != -1){
+    this.props.averageLayerDisplay.changeMapDisplay({
+      averageGeodata: averagePlan,
+      jobid : shortid.generate()
+    })
+  }
+  else{
+    this.props.averageLayerDisplay.changeMapDisplay({
+      averageGeodata: "",
+      jobid : shortid.generate()
+    })
+  }
+
+  if (checkedList.findIndex(element => element === "Extreme") != -1){
+    this.props.extremeLayerDisplay.changeMapDisplay({
+      extremeGeodata: extremePlan,
+      jobid : shortid.generate()
+    })
+  }
+  else{
+    this.props.extremeLayerDisplay.changeMapDisplay({
+      extremeGeodata: "",
+      jobid : shortid.generate()
+    })
+  }
+
+  if (checkedList.findIndex(element => element === "Random") != -1){
+    this.props.randomLayerDisplay.changeMapDisplay({
+      randomGeodata: randomPlan,
+      jobid : shortid.generate()
+    })
+  }
+  else{
+    this.props.randomLayerDisplay.changeMapDisplay({
+      randomGeodata: "",
+      jobid : shortid.generate()
+    })
+  }
+
 };
 
   handleChangetoMap = () => {
@@ -79,13 +126,19 @@ const mapDispatchToProps = (dispatch) => {
   return {
     mapDisplayAction: bindActionCreators(mapDisplayAction, dispatch),
     resultAction: bindActionCreators(resultAction, dispatch),
+    averageLayerDisplay: bindActionCreators(averageLayerDisplay, dispatch),
+    extremeLayerDisplay: bindActionCreators(extremeLayerDisplay, dispatch),
+    randomLayerDisplay: bindActionCreators(randomLayerDisplay, dispatch),
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     MapDisplay: state.MapDisplay,
-    Result: state.Result
+    Result: state.Result,
+    AverageLayerDisplay: state.AverageLayerDisplay,
+    ExtremeLayerDisplay: state.ExtremeLayerDisplay,
+    RandomLayerDisplay: state.RandomLayerDisplay,
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import './style.less'
 import StateGeoData from '../../static/stateGeoJson'
-import { Map, TileLayer, GeoJSON } from 'react-leaflet'
+import { Map, TileLayer, GeoJSON, LayersControl, LayerGroup } from 'react-leaflet'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as mapAction from '../../actions/mapAction'
@@ -11,12 +11,16 @@ import shortid from 'shortid'
 import api from '../../api'
 
 
+const firstOverlayRef = createRef();
+const mapRef = createRef();
+
 const DEFAULT_VIEWPORT = {
   center: [37.8, -96],
   zoom: 4,
 }
 
 class leafletMap extends React.Component {
+
   constructor() {
     super()
     this.state = {
@@ -83,7 +87,7 @@ class leafletMap extends React.Component {
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "WhiteDensity") {
-      let whitePercentage = feature.properties.WVAP / (feature.properties.TOTPOP * 0,7)
+      let whitePercentage = feature.properties.WVAP / (feature.properties.TOTPOP * 0, 7)
       let res = heatMapColorforValue(whitePercentage)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
@@ -162,7 +166,7 @@ class leafletMap extends React.Component {
           },
         })
 
-      layer.setStyle({
+        layer.setStyle({
           fillColor: 'red',
           opacity: 1
         })
@@ -177,7 +181,7 @@ class leafletMap extends React.Component {
       },
     });
   }
-
+ 
   render() {
     let geodata = this.props.Mapstate.geodata;
     let geokey = this.props.Mapstate.geokey;
@@ -185,6 +189,7 @@ class leafletMap extends React.Component {
       geodata = StateGeoData;
       geokey = "state-key";
     }
+
 
     return (
       <div>
@@ -197,11 +202,11 @@ class leafletMap extends React.Component {
             descriptionInfo={this.state.descriptionInfo}
           ></Description>
         }
-        
+
 
         <Map
+          ref={mapRef}
           viewport={this.props.Mapstate}
-          ref={this.mapRef}
           onClick={this.handleClickGetLat.bind(this)}
         >
 
@@ -210,6 +215,33 @@ class leafletMap extends React.Component {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url='	https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
           />
+          {
+
+            <GeoJSON
+              id="random"
+              key={this.props.RandomLayerDisplay.jobid + "random"}
+              data={this.props.RandomLayerDisplay.randomGeodata}
+            />
+          }
+
+          {
+
+            <GeoJSON
+              id="extreme"
+              key={this.props.ExtremeLayerDisplay.jobid + "extreme"}
+              data={this.props.ExtremeLayerDisplay.extremeGeodata}
+            />
+          }
+
+          {
+
+            <GeoJSON
+              id="average"
+              key={this.props.AverageLayerDisplay.jobid + "average"}
+              data={this.props.AverageLayerDisplay.averageGeodata}
+            />
+          }
+
 
           {
             <GeoJSON
@@ -233,7 +265,10 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     Mapstate: state.Mapstate,
-    MapDisplay: state.MapDisplay
+    MapDisplay: state.MapDisplay,
+    AverageLayerDisplay: state.AverageLayerDisplay,
+    ExtremeLayerDisplay: state.ExtremeLayerDisplay,
+    RandomLayerDisplay: state.RandomLayerDisplay,
   }
 }
 
