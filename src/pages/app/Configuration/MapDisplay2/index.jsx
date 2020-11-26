@@ -7,6 +7,9 @@ import { Radio } from 'antd';
 import { Row, Col, Layout, Button } from 'antd';
 import stateGeoData from '../../../../static/stateGeoJson'
 import shortid from "shortid"
+import api from "../../../../api"
+
+
 const { Content } = Layout;
 
 
@@ -43,6 +46,60 @@ class MapDisplay2 extends React.Component {
     this.setState({
       levelvalue: e.target.value,
     });
+
+    if(e.target.value === 'district'){
+
+    if(this.props.Mapstate.position !== 'US'){
+      let stateName = ""
+      if(this.props.Mapstate.position === 'GA'){
+        stateName = "georgia/districting" 
+      }
+      else if(this.props.Mapstate.position === 'LA'){
+        stateName = "louisiana/districting"
+      }
+      else if(this.props.Mapstate.position === 'MI'){
+        stateName = "mississippi/districting"
+      }
+
+      api.map.getMap(stateName).then(res => res.json())
+      .then(data => {
+        this.props.mapAction.changeMapState({
+          center: this.props.Mapstate.center,
+          zoom: this.props.Mapstate.zoom,
+          position: this.props.Mapstate.position,
+          geodata: data,
+          geokey: shortid.generate()
+        })
+      })
+    }
+  }
+
+  else if(e.target.value === 'precinct'){
+
+    if(this.props.Mapstate.position !== 'US'){
+      let stateName = ""
+      if(this.props.Mapstate.position === 'GA'){
+        stateName = "georgia" 
+      }
+      else if(this.props.Mapstate.position === 'LA'){
+        stateName = "louisiana"
+      }
+      else if(this.props.Mapstate.position === 'MI'){
+        stateName = "mississippi"
+      }
+
+      api.map.getMap(stateName).then(res => res.json())
+      .then(data => {
+        this.props.mapAction.changeMapState({
+          center: this.props.Mapstate.center,
+          zoom: this.props.Mapstate.zoom,
+          position: this.props.Mapstate.position,
+          geodata: data,
+          geokey: shortid.generate()
+        })
+      })
+    }
+  }
   };
 
   handleReset = (event) => {
@@ -72,6 +129,13 @@ class MapDisplay2 extends React.Component {
       fontSize: '20px'
     };
     const { colorvalue, levelvalue } = this.state;
+
+    let currentMode = false
+    if(levelvalue === "district"){
+    currentMode = true
+    }
+
+
     return (
 
       <Content>
@@ -82,7 +146,7 @@ class MapDisplay2 extends React.Component {
           </Col>
         </Row>
         <p style={{ marginLeft: "10px", fontSize: "20px" }}> Display map by population density</p>
-        <Radio.Group onChange={this.colorOnChange} value={colorvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}
+        <Radio.Group disabled={currentMode} onChange={this.colorOnChange} value={colorvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}
         >
           <Radio style={radioStyle} value={"default"} size="large">
             Default
