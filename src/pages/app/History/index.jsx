@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ResultBox from "./ResultBox"
 import api from "../../../api"
+import { Button } from 'antd';
 import * as mapAction from '../../../actions/mapAction'
 import * as mapDisplayAction from '../../../actions/mapDisplay'
 
@@ -30,6 +31,7 @@ class Result extends React.Component {
     console.log(data)
     return (
       <div>
+          <Button style={{marginLeft:100,marginBottom:20}}>Update Status</Button>
         {
           data.map((element) => {
             return <ResultBox handleCancelCallback={this.props.handleCancelCallback} data={element} key={element.jobId} />
@@ -51,7 +53,7 @@ const mapStateToProps = (state) => {
   return {
     Mapstate: state.Mapstate,
     MapDisplay: state.MapDisplay,
-    TotalResult: state.TotalResult
+    TotalResult: state.TotalResult,
   }
 }
 

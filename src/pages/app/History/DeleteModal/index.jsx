@@ -27,19 +27,21 @@ class modal extends React.Component {
       ModalText: 'You delete the job successfully',
       confirmLoading: true,
     });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
+ 
+     
 
       api.jobs.deleteJob(this.props.jobid)
         .then(res => {
           console.log(res)
           this.props.handleCancelCallback()
         }
-        )
-    }, 2000);
+        ).then(data=>{
+          this.setState({
+            visible: false,
+            confirmLoading: false,
+          });
+        })
+ 
   };
 
   handleCancel = (e) => {

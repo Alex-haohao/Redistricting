@@ -67,9 +67,53 @@ class leafletMap extends React.Component {
       weight: feature.properties.density / 100,
       opacity: 1,
       dashArray: '3',
-      fillOpacity: 0.5
+      fillOpacity: 0.5,
     };
   };
+
+  
+
+  onEachRandomFeature(feature, layer){
+    function random_rgba() {
+      var o = Math.round, r = Math.random, s = 255;
+      return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) +')';
+  }
+  
+  let color = random_rgba();
+    layer.setStyle({
+      fillColor: color,
+      opacity: 0.5,
+      color: 'black'
+    })
+  }
+
+  onEachExtremeFeature(feature, layer){
+    function random_rgba() {
+      var o = Math.round, r = Math.random, s = 255;
+      return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) +')';
+  }
+  
+  let color = random_rgba();
+    layer.setStyle({
+      fillColor: color,
+      opacity: 0.5,
+      color: 'red'
+    })
+  }
+
+  onEachaverageFeature(feature, layer){
+    function random_rgba() {
+      var o = Math.round, r = Math.random, s = 255;
+      return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) +')';
+  }
+  
+  let color = random_rgba();
+    layer.setStyle({
+      fillColor: color,
+      opacity: 0.5,
+      color: 'white'
+    })
+  }
 
   onEachFeature(feature, layer) {
     layer.options.opacity = 0.5
@@ -221,6 +265,7 @@ class leafletMap extends React.Component {
               id="random"
               key={this.props.RandomLayerDisplay.jobid + "random"}
               data={this.props.RandomLayerDisplay.randomGeodata}
+              onEachFeature={this.onEachRandomFeature.bind(this)}
             />
           }
 
@@ -230,6 +275,7 @@ class leafletMap extends React.Component {
               id="extreme"
               key={this.props.ExtremeLayerDisplay.jobid + "extreme"}
               data={this.props.ExtremeLayerDisplay.extremeGeodata}
+              onEachFeature={this.onEachExtremeFeature.bind(this)}
             />
           }
 
@@ -239,6 +285,7 @@ class leafletMap extends React.Component {
               id="average"
               key={this.props.AverageLayerDisplay.jobid + "average"}
               data={this.props.AverageLayerDisplay.averageGeodata}
+              onEachFeature={this.onEachaverageFeature.bind(this)}
             />
           }
 
