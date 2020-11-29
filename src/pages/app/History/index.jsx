@@ -26,12 +26,24 @@ class Result extends React.Component {
       })
   }
 
+  handleUpdate = (e) =>{
+    e.preventDefault();
+    e.stopPropagation()
+
+    api.jobs.updateJob()
+        .then(res => {
+          console.log(res)
+          // this.props.handleCancelCallback()  // also for update the view
+        })
+ 
+  }
+
   render() {
     let data = this.props.historyData ? this.props.historyData : this.state.initeData
     console.log(data)
     return (
       <div>
-          <Button style={{marginLeft:100,marginBottom:20}}>Update Status</Button>
+          <Button onClick={this.handleUpdate} style={{marginLeft:100,marginBottom:20}}>Update Status</Button>
         {
           data.map((element) => {
             return <ResultBox handleCancelCallback={this.props.handleCancelCallback} data={element} key={element.jobId} />

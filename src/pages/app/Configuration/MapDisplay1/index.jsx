@@ -63,7 +63,7 @@ class MapDisplay1 extends React.Component {
 
     return (
       <div>
-        <Row style={{ marginTop: "20px", marginBottom: "50px" }}>
+        <Row style={{ marginTop: "20px", marginBottom: "30px" }}>
           <Col span={6}></Col>
           <Col span={18}>
             <Dropdown overlay={menu} size="large" >

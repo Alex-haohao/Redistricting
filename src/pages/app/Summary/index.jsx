@@ -6,7 +6,7 @@ import * as resultAction from '../../../actions/resultAction'
 import * as averageLayerDisplay from '../../../actions/averageLayerDisplay'
 import * as extremeLayerDisplay from '../../../actions/extremeLayerDisplay'
 import * as randomLayerDisplay from '../../../actions/randomLayerDisplay'
-import { Card ,Checkbox} from 'antd';
+import { Card, Checkbox,Button } from 'antd';
 import './style.less';
 import shortid from 'shortid'
 import randomPlan from '../../../static/GA_random.json'
@@ -24,56 +24,56 @@ class Summary extends React.Component {
   constructor() {
     super()
     this.state = {
-       checkedList: defaultCheckedList,
+      checkedList: defaultCheckedList,
     };
-}
-  
-
-onChange = checkedList => {
-  this.setState({
-    checkedList
-  });
-  
-  if (checkedList.findIndex(element => element === "Average") != -1){
-    this.props.averageLayerDisplay.changeMapDisplay({
-      averageGeodata: averagePlan,
-      jobid : shortid.generate()
-    })
-  }
-  else{
-    this.props.averageLayerDisplay.changeMapDisplay({
-      averageGeodata: "",
-      jobid : shortid.generate()
-    })
   }
 
-  if (checkedList.findIndex(element => element === "Extreme") != -1){
-    this.props.extremeLayerDisplay.changeMapDisplay({
-      extremeGeodata: extremePlan,
-      jobid : shortid.generate()
-    })
-  }
-  else{
-    this.props.extremeLayerDisplay.changeMapDisplay({
-      extremeGeodata: "",
-      jobid : shortid.generate()
-    })
-  }
 
-  if (checkedList.findIndex(element => element === "Random") != -1){
-    this.props.randomLayerDisplay.changeMapDisplay({
-      randomGeodata: randomPlan,
-      jobid : shortid.generate()
-    })
-  }
-  else{
-    this.props.randomLayerDisplay.changeMapDisplay({
-      randomGeodata: "",
-      jobid : shortid.generate()
-    })
-  }
+  onChange = checkedList => {
+    this.setState({
+      checkedList
+    });
 
-};
+    if (checkedList.findIndex(element => element === "Average") != -1) {
+      this.props.averageLayerDisplay.changeMapDisplay({
+        averageGeodata: averagePlan,
+        jobid: shortid.generate()
+      })
+    }
+    else {
+      this.props.averageLayerDisplay.changeMapDisplay({
+        averageGeodata: "",
+        jobid: shortid.generate()
+      })
+    }
+
+    if (checkedList.findIndex(element => element === "Extreme") != -1) {
+      this.props.extremeLayerDisplay.changeMapDisplay({
+        extremeGeodata: extremePlan,
+        jobid: shortid.generate()
+      })
+    }
+    else {
+      this.props.extremeLayerDisplay.changeMapDisplay({
+        extremeGeodata: "",
+        jobid: shortid.generate()
+      })
+    }
+
+    if (checkedList.findIndex(element => element === "Random") != -1) {
+      this.props.randomLayerDisplay.changeMapDisplay({
+        randomGeodata: randomPlan,
+        jobid: shortid.generate()
+      })
+    }
+    else {
+      this.props.randomLayerDisplay.changeMapDisplay({
+        randomGeodata: "",
+        jobid: shortid.generate()
+      })
+    }
+
+  };
 
   handleChangetoMap = () => {
     this.props.mapDisplayAction.changeMapDisplay({
@@ -89,6 +89,10 @@ onChange = checkedList => {
         display: this.props.MapDisplay.display,
       })
     }
+  }
+
+  handleDownloadClick = (e) =>{
+    // window.open(`/react/get/downloadPdf?id=${this.props.id}&name=${this.props.name}`)
   }
 
   render() {
@@ -108,15 +112,29 @@ onChange = checkedList => {
         <br />
         <br />
 
-      <span style={{fontSize:25,marginLeft:50}}>Districting Plan:</span>
+        <span style={{ fontSize: 25, marginLeft: 50 }}>Districting Plan:</span>
 
-      <br />
         <br />
-        <CheckboxGroup 
+        <br />
+        <CheckboxGroup
           options={plainOptions}
           value={this.state.checkedList}
           onChange={this.onChange}
         />
+        <br />
+        <br />
+
+        <br />
+        <br />
+
+        <span style={{ fontSize: 25, marginLeft: 30 }}>Download Districting Plan</span>
+        <br />
+        <Button
+        style={{marginLeft: 100 }}
+          onClick={this.handleDownloadClick}
+        >
+          Download
+        </Button>
       </div>
     )
   }

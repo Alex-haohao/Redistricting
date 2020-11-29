@@ -14,6 +14,10 @@ const jobs = {
     deleteJob(data){
         return deleteData(base.job + '/' + data)
     }
+    ,
+    updateJob(){
+        return getData(base.updataJob)
+    }
 }
 
 

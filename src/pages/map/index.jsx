@@ -71,15 +71,15 @@ class leafletMap extends React.Component {
     };
   };
 
-  
 
-  onEachRandomFeature(feature, layer){
+
+  onEachRandomFeature(feature, layer) {
     function random_rgba() {
       var o = Math.round, r = Math.random, s = 255;
-      return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) +')';
-  }
-  
-  let color = random_rgba();
+      return 'rgb(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
+    }
+
+    let color = random_rgba();
     layer.setStyle({
       fillColor: color,
       opacity: 0.5,
@@ -87,13 +87,13 @@ class leafletMap extends React.Component {
     })
   }
 
-  onEachExtremeFeature(feature, layer){
+  onEachExtremeFeature(feature, layer) {
     function random_rgba() {
       var o = Math.round, r = Math.random, s = 255;
-      return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) +')';
-  }
-  
-  let color = random_rgba();
+      return 'rgb(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
+    }
+
+    let color = random_rgba();
     layer.setStyle({
       fillColor: color,
       opacity: 0.5,
@@ -101,13 +101,13 @@ class leafletMap extends React.Component {
     })
   }
 
-  onEachaverageFeature(feature, layer){
+  onEachaverageFeature(feature, layer) {
     function random_rgba() {
       var o = Math.round, r = Math.random, s = 255;
-      return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) +')';
-  }
-  
-  let color = random_rgba();
+      return 'rgb(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
+    }
+
+    let color = random_rgba();
     layer.setStyle({
       fillColor: color,
       opacity: 0.5,
@@ -116,14 +116,51 @@ class leafletMap extends React.Component {
   }
 
   onEachFeature(feature, layer) {
-    layer.options.opacity = 0.5
+    layer.options.opacity = 0.7
     let tempfillcolor = layer.options.fillColor
     let tempopacity = layer.options.opacity
 
     ////////////////////HEAT MAP////////////////////////////////////////////////////////
-    function heatMapColorforValue(value) {
-      var h = (1.0 - value) * 240
-      return "hsl(" + h + ", 100%, 50%)";
+    let whiteCount = 0
+    let asianCount = 0
+    let africanAmericanCount = 0
+    let americanIndianCount = 0
+    let otherDensityCount = 0
+
+    if (this.props.Mapstate.position === "GA") {
+      whiteCount = 0.597
+      asianCount = 0.032
+      africanAmericanCount = 0.305
+      americanIndianCount = 0.004
+      otherDensityCount = 0.004
+    }
+
+    else if (this.props.Mapstate.position === "MI") {
+      whiteCount = 0.591
+      asianCount = 0.011
+      africanAmericanCount = 0.378
+      americanIndianCount = 0.007
+      otherDensityCount = 0.0013
+    }
+
+    else if (this.props.Mapstate.position === "LA") {
+      whiteCount = 0.628
+      asianCount = 0.018
+      africanAmericanCount = 0.328
+      americanIndianCount = 0.008
+      otherDensityCount = 0.0018
+    }
+
+
+    function heatMapColorforValue(value,count,multi) {
+      let standard = (count - value)*multi * 60 +60
+      if(standard>110){
+        standard =110
+      }
+      else if(standard<0){
+        standard = 0
+      }
+      return "hsl(" + standard + ", 100%, 50%)";
     }
 
     if (this.props.MapDisplay.display === "default") {
@@ -131,36 +168,36 @@ class leafletMap extends React.Component {
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "WhiteDensity") {
-      let whitePercentage = feature.properties.WVAP / (feature.properties.TOTPOP * 0, 7)
-      let res = heatMapColorforValue(whitePercentage)
+      let whitePercentage = feature.properties.WVAP / (feature.properties.VAP)
+      let res = heatMapColorforValue(whitePercentage,whiteCount,1.5)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AsianDensity") {
-      let asianPercentage = feature.properties.ASIANVAP / (feature.properties.TOTPOP * 0.06)
-      let res = heatMapColorforValue(asianPercentage)
+      let asianPercentage = feature.properties.ASIANVAP / (feature.properties.VAP)
+      let res = heatMapColorforValue(asianPercentage,asianCount,1/asianCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AfricanAmericandensity") {
-      let africanAmericanPercentage = feature.properties.BVAP / (feature.properties.TOTPOP * 0.134)
-      let res = heatMapColorforValue(africanAmericanPercentage)
+      let africanAmericanPercentage = feature.properties.BVAP / (feature.properties.VAP)
+      let res = heatMapColorforValue(africanAmericanPercentage,africanAmericanCount,1/africanAmericanCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AmericanIndian") {
-      let americanIndianPercentage = feature.properties.AMINVAP / (feature.properties.TOTPOP * 0.013)
-      let res = heatMapColorforValue(americanIndianPercentage)
+      let americanIndianPercentage = feature.properties.AMINVAP / (feature.properties.VAP)
+      let res = heatMapColorforValue(americanIndianPercentage,americanIndianCount,1/americanIndianCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "otherDensity") {
-      let otherDensityPercentage = feature.properties.OTHERVAP / (feature.properties.TOTPOP * 0.03)
-      let res = heatMapColorforValue(otherDensityPercentage)
+      let otherDensityPercentage = feature.properties.OTHERVAP / (feature.properties.VAP)
+      let res = heatMapColorforValue(otherDensityPercentage,otherDensityCount,1/otherDensityCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
@@ -225,7 +262,7 @@ class leafletMap extends React.Component {
       },
     });
   }
- 
+
   render() {
     let geodata = this.props.Mapstate.geodata;
     let geokey = this.props.Mapstate.geokey;

@@ -8,7 +8,7 @@ import { Row, Col, Layout, Button } from 'antd';
 import stateGeoData from '../../../../static/stateGeoJson'
 import shortid from "shortid"
 import api from "../../../../api"
-
+import './style.less'
 
 const { Content } = Layout;
 
@@ -47,59 +47,59 @@ class MapDisplay2 extends React.Component {
       levelvalue: e.target.value,
     });
 
-    if(e.target.value === 'district'){
+    if (e.target.value === 'district') {
 
-    if(this.props.Mapstate.position !== 'US'){
-      let stateName = ""
-      if(this.props.Mapstate.position === 'GA'){
-        stateName = "georgia/districting" 
-      }
-      else if(this.props.Mapstate.position === 'LA'){
-        stateName = "louisiana/districting"
-      }
-      else if(this.props.Mapstate.position === 'MI'){
-        stateName = "mississippi/districting"
-      }
+      if (this.props.Mapstate.position !== 'US') {
+        let stateName = ""
+        if (this.props.Mapstate.position === 'GA') {
+          stateName = "georgia/districting"
+        }
+        else if (this.props.Mapstate.position === 'LA') {
+          stateName = "louisiana/districting"
+        }
+        else if (this.props.Mapstate.position === 'MI') {
+          stateName = "mississippi/districting"
+        }
 
-      api.map.getMap(stateName).then(res => res.json())
-      .then(data => {
-        this.props.mapAction.changeMapState({
-          center: this.props.Mapstate.center,
-          zoom: this.props.Mapstate.zoom,
-          position: this.props.Mapstate.position,
-          geodata: data,
-          geokey: shortid.generate()
-        })
-      })
+        api.map.getMap(stateName).then(res => res.json())
+          .then(data => {
+            this.props.mapAction.changeMapState({
+              center: this.props.Mapstate.center,
+              zoom: this.props.Mapstate.zoom,
+              position: this.props.Mapstate.position,
+              geodata: data,
+              geokey: shortid.generate()
+            })
+          })
+      }
     }
-  }
 
-  else if(e.target.value === 'precinct'){
+    else if (e.target.value === 'precinct') {
 
-    if(this.props.Mapstate.position !== 'US'){
-      let stateName = ""
-      if(this.props.Mapstate.position === 'GA'){
-        stateName = "georgia" 
-      }
-      else if(this.props.Mapstate.position === 'LA'){
-        stateName = "louisiana"
-      }
-      else if(this.props.Mapstate.position === 'MI'){
-        stateName = "mississippi"
-      }
+      if (this.props.Mapstate.position !== 'US') {
+        let stateName = ""
+        if (this.props.Mapstate.position === 'GA') {
+          stateName = "georgia"
+        }
+        else if (this.props.Mapstate.position === 'LA') {
+          stateName = "louisiana"
+        }
+        else if (this.props.Mapstate.position === 'MI') {
+          stateName = "mississippi"
+        }
 
-      api.map.getMap(stateName).then(res => res.json())
-      .then(data => {
-        this.props.mapAction.changeMapState({
-          center: this.props.Mapstate.center,
-          zoom: this.props.Mapstate.zoom,
-          position: this.props.Mapstate.position,
-          geodata: data,
-          geokey: shortid.generate()
-        })
-      })
+        api.map.getMap(stateName).then(res => res.json())
+          .then(data => {
+            this.props.mapAction.changeMapState({
+              center: this.props.Mapstate.center,
+              zoom: this.props.Mapstate.zoom,
+              position: this.props.Mapstate.position,
+              geodata: data,
+              geokey: shortid.generate()
+            })
+          })
+      }
     }
-  }
   };
 
   handleReset = (event) => {
@@ -131,8 +131,8 @@ class MapDisplay2 extends React.Component {
     const { colorvalue, levelvalue } = this.state;
 
     let currentMode = false
-    if(levelvalue === "district"){
-    currentMode = true
+    if (levelvalue === "district") {
+      currentMode = true
     }
 
 
@@ -177,8 +177,22 @@ class MapDisplay2 extends React.Component {
           <Radio style={radioStyle} value={"precinct"} size="large">
             Precinct
             </Radio>
-
         </Radio.Group>
+
+        <br /><br /><br />
+
+        
+        <Row>
+          <Col span={3}></Col>
+          <Col span={9}>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(0,100%,50%)"}}></div> {"  >"} 50%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(30,100%,50%)"}}></div>{"  >"} 25%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(60,100%,50%)"}}></div>{"  ="} 0%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(90,100%,50%)"}}></div>{"  <"} 25%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(110,100%,50%)"}}></div>{"  <"} 50%</p>
+          </Col>
+        </Row>
+       
       </Content>
     );
   }
