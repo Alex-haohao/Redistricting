@@ -17,7 +17,11 @@ const jobs = {
     ,
     updateJob(){
         return getData(base.updataJob)
+    },
+    cancelJob(data){
+        return deleteData(base.job + '/' + data + "/cancel")
     }
+
 }
 
 

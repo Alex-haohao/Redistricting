@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {addResult,deleteResult}  from '../../../../actions/totalResult'
+import api from "../../../../api"
 
 
 class modal extends React.Component {
@@ -23,22 +24,22 @@ class modal extends React.Component {
   handleOk = (e) => {
     e.preventDefault();
     e.stopPropagation()
-
-   
-
     this.setState({
-      ModalText: 'You Cancel the job successfully',
+      ModalText: 'You delete the job successfully',
       confirmLoading: true,
     });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-      this.props.deleteResult({
-        jobid: this.props.jobid
-})
-    }, 2000);
+      api.jobs.cancelJob(this.props.jobid)
+        .then(res => {
+          console.log(res)
+          this.props.handleCancelCallback()
+        }
+        ).then(data=>{
+          this.setState({
+            visible: false,
+            confirmLoading: false,
+          });
+        })
+ 
   };
 
   handleCancel = (e) => {

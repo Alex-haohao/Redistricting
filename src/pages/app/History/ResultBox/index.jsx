@@ -44,6 +44,8 @@ class ResultBox extends React.Component {
                      <div>
                     <CancelModal onClick={e =>{e.stopPropagation()}}
                      jobid = {this.props.data.jobId}>
+                    handleCancelCallback={this.props.handleCancelCallback}
+
                      </CancelModal>
                     <DeleteModal onClick={e =>{e.stopPropagation()}}
                      jobid = {this.props.data.jobId}
