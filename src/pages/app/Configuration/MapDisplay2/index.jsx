@@ -131,10 +131,14 @@ class MapDisplay2 extends React.Component {
     const { colorvalue, levelvalue } = this.state;
 
     let currentMode = false
-    if (levelvalue === "district") {
+    if (levelvalue !== "district" && levelvalue !== "precinct") {
       currentMode = true
     }
 
+    let filtermode = true
+    if (this.props.Mapstate.position !=="US") {
+      filtermode = false
+    }
 
     return (
 
@@ -170,7 +174,7 @@ class MapDisplay2 extends React.Component {
 
         <br /><br /><br />
         <p style={{ marginLeft: "10px", fontSize: "20px" }}>Filter Boundary </p>
-        <Radio.Group onChange={this.levelOnChange} value={levelvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}>
+        <Radio.Group disabled={filtermode} onChange={this.levelOnChange} value={levelvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}>
           <Radio style={radioStyle} value={"district"} size="large">
             District
             </Radio>
@@ -181,17 +185,17 @@ class MapDisplay2 extends React.Component {
 
         <br /><br /><br />
 
-        
-        <Row>
+        {this.props.MapDisplay.display === "default" ? null : <Row>
           <Col span={3}></Col>
           <Col span={9}>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(0,100%,50%)"}}></div> {"  >"} 50%</p>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(30,100%,50%)"}}></div>{"  >"} 25%</p>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(60,100%,50%)"}}></div>{"  ="} 0%</p>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(90,100%,50%)"}}></div>{"  <"} 25%</p>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(110,100%,50%)"}}></div>{"  <"} 50%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,90%,50%)"}}></div> {"  >"} 50%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,75%,50%)"}}></div>{"  >"} 25%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,50%,50%)"}}></div>{"  ="} 0%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,25%,50%)"}}></div>{"  <"} 25%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,10%,50%)"}}></div>{"  <"} 50%</p>
           </Col>
-        </Row>
+        </Row>}
+        
        
       </Content>
     );

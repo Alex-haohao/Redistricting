@@ -69,7 +69,7 @@ class leafletMap extends React.Component {
       weight: feature.properties.density / 100,
       opacity: 1,
       dashArray: '3',
-      fillOpacity: 0.5,
+      fillOpacity: 0.7,
     };
   };
 
@@ -118,7 +118,9 @@ class leafletMap extends React.Component {
   }
 
   onEachFeature(feature, layer) {
-    layer.options.opacity = 0.7
+    layer.options.opacity = 1
+    layer.options.weight = 1
+
     let tempfillcolor = layer.options.fillColor
     let tempopacity = layer.options.opacity
 
@@ -155,7 +157,8 @@ class leafletMap extends React.Component {
 
 
     function heatMapColorforValue(value, count, multi) {
-      let standard = 100 - ((count - value) * multi * 50 + 50)
+      let standard = 100 - ( ((count - value) * multi) +50)
+      console.log(value)
       console.log(standard)
       if (standard > 100) {
         standard = 100
@@ -163,7 +166,7 @@ class leafletMap extends React.Component {
       else if (standard < 0) {
         standard = 0
       }
-      return "hsl(0, " + standard + "%" + ", 40%)";
+      return "hsl(180, " + standard + "%" + ", 40%)";
     }
 
     if (this.props.MapDisplay.display === "default") {
@@ -171,37 +174,37 @@ class leafletMap extends React.Component {
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "WhiteDensity") {
-      let whitePercentage = feature.properties.WVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(whitePercentage, whiteCount, 1.5)
-      layer.setStyle({ fillColor: res, fillOpacity: 0.4 })
+      let whitePercentage = feature.properties.WHITE / (feature.properties.TOTPOP)
+      let res = heatMapColorforValue(whitePercentage, whiteCount, 100)
+      layer.setStyle({ fillColor: res, fillOpacity: 0.6})
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AsianDensity") {
-      let asianPercentage = feature.properties.ASIANVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(asianPercentage, asianCount, 1 / asianCount)
-      layer.setStyle({ fillColor: res })
+      let asianPercentage = feature.properties.ASIAN / (feature.properties.TOTPOP)
+      let res = heatMapColorforValue(asianPercentage, asianCount, 1/asianCount *50)
+      layer.setStyle({ fillColor: res ,fillOpacity: 0.6})
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AfricanAmericandensity") {
-      let africanAmericanPercentage = feature.properties.BVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(africanAmericanPercentage, africanAmericanCount, 1 / africanAmericanCount)
-      layer.setStyle({ fillColor: res })
+      let africanAmericanPercentage = feature.properties.BLACK / (feature.properties.TOTPOP)
+      let res = heatMapColorforValue(africanAmericanPercentage, africanAmericanCount, 1 / africanAmericanCount *50)
+      layer.setStyle({ fillColor: res,fillOpacity: 0.6 })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AmericanIndian") {
-      let americanIndianPercentage = feature.properties.AMINVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(americanIndianPercentage, americanIndianCount, 1 / americanIndianCount)
-      layer.setStyle({ fillColor: res })
+      let americanIndianPercentage = feature.properties.AMIN / (feature.properties.TOTPOP)
+      let res = heatMapColorforValue(americanIndianPercentage, americanIndianCount, 1 / americanIndianCount *50)
+      layer.setStyle({ fillColor: res,fillOpacity: 0.6 })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "otherDensity") {
-      let otherDensityPercentage = feature.properties.OTHERVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(otherDensityPercentage, otherDensityCount, 1 / otherDensityCount)
-      layer.setStyle({ fillColor: res })
+      let otherDensityPercentage = feature.properties.OTHER / (feature.properties.TOTPOP)
+      let res = heatMapColorforValue(otherDensityPercentage, otherDensityCount, 1 / otherDensityCount *50)
+      layer.setStyle({ fillColor: res,fillOpacity: 0.6 })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
@@ -304,10 +307,7 @@ class leafletMap extends React.Component {
 
     return (
       <div>
-        {this.props.Mapstate.position === "US" ? <StateDescription
-          descriptionInfo={this.state.descriptionInfo}
-          opacity={this.state.descriptDisplay}
-        ></StateDescription> :
+        {this.props.Mapstate.position === "US" ? null :
           <Description
             opacity={this.state.descriptDisplay}
             descriptionInfo={this.state.descriptionInfo}

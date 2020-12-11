@@ -52,7 +52,8 @@ class Configuration extends React.Component {
   render() {
     return (
       <Sider className="site-layout-background" width={340}>
-        <Button type="primary" style={{ width: "100%" }} onClick={this.handleChangetoMap}>Back to Map</Button>
+        {this.props.MapDisplay.isShow === false ? <Button type="primary" style={{ width: "100%" }} onClick={this.handleChangetoMap}>Back to Map</Button>: null}
+        
         <Tabs
           activeKey={this.props.MapDisplay.sidemenu.toString()}
           onChange={key => {
