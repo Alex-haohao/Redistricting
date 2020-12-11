@@ -28,12 +28,6 @@ class leafletMap extends React.Component {
       descriptDisplay: 0,
       descriptionInfo: {
         PRECINCT_N: "empty",
-        PRES16D: 0,
-        PRES16R: 0,
-        PRES16L: 0,
-        SEN16D: 0,
-        SEN16R: 0,
-        SEN16L: 0,
         TOTPOP: 0,
         VAP: 0,
         HVAP: 0,
@@ -42,7 +36,15 @@ class leafletMap extends React.Component {
         AMINVAP: 0,
         ASIANVAP: 0,
         NHPIVAP: 0,
-        OTHERVAP: 0
+        OTHERVAP: 0,
+        WHITE: 0,
+        BLACK: 0,
+        HISP: 0,
+        AMIN: 0,
+        OTHER: 0,
+        ASIAN: 0,
+        NHPI: 0
+
       },
       geodata: StateGeoData,
       geokey: "state-key"
@@ -152,15 +154,16 @@ class leafletMap extends React.Component {
     }
 
 
-    function heatMapColorforValue(value,count,multi) {
-      let standard = (count - value)*multi * 60 +60
-      if(standard>110){
-        standard =110
+    function heatMapColorforValue(value, count, multi) {
+      let standard = 100 - ((count - value) * multi * 50 + 50)
+      console.log(standard)
+      if (standard > 100) {
+        standard = 100
       }
-      else if(standard<0){
+      else if (standard < 0) {
         standard = 0
       }
-      return "hsl(" + standard + ", 100%, 50%)";
+      return "hsl(0, " + standard + "%" + ", 40%)";
     }
 
     if (this.props.MapDisplay.display === "default") {
@@ -169,35 +172,35 @@ class leafletMap extends React.Component {
     }
     else if (this.props.MapDisplay.display === "WhiteDensity") {
       let whitePercentage = feature.properties.WVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(whitePercentage,whiteCount,1.5)
-      layer.setStyle({ fillColor: res })
+      let res = heatMapColorforValue(whitePercentage, whiteCount, 1.5)
+      layer.setStyle({ fillColor: res, fillOpacity: 0.4 })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AsianDensity") {
       let asianPercentage = feature.properties.ASIANVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(asianPercentage,asianCount,1/asianCount)
+      let res = heatMapColorforValue(asianPercentage, asianCount, 1 / asianCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AfricanAmericandensity") {
       let africanAmericanPercentage = feature.properties.BVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(africanAmericanPercentage,africanAmericanCount,1/africanAmericanCount)
+      let res = heatMapColorforValue(africanAmericanPercentage, africanAmericanCount, 1 / africanAmericanCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "AmericanIndian") {
       let americanIndianPercentage = feature.properties.AMINVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(americanIndianPercentage,americanIndianCount,1/americanIndianCount)
+      let res = heatMapColorforValue(americanIndianPercentage, americanIndianCount, 1 / americanIndianCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
     }
     else if (this.props.MapDisplay.display === "otherDensity") {
       let otherDensityPercentage = feature.properties.OTHERVAP / (feature.properties.VAP)
-      let res = heatMapColorforValue(otherDensityPercentage,otherDensityCount,1/otherDensityCount)
+      let res = heatMapColorforValue(otherDensityPercentage, otherDensityCount, 1 / otherDensityCount)
       layer.setStyle({ fillColor: res })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity
@@ -208,12 +211,38 @@ class leafletMap extends React.Component {
       click: (e) => {
         layer.setStyle({ fillColor: 'red' })
         if (feature.properties.NAME === "Georgia") {
-          api.map.getMap("georgia").then(res => res.json())
+          api.map.getMap("georgia/districting").then(res => res.json())
             .then(data => {
               this.props.mapAction.changeMapState({
                 center: [32.69020691781246, -83.58756508528708],
                 zoom: 7,
                 position: "GA",
+                geodata: data,
+                geokey: shortid.generate()
+              })
+            })
+        }
+        else if (feature.properties.NAME === "Louisiana") {
+          console.log("hahaha")
+          api.map.getMap("louisiana/districting").then(res => res.json())
+            .then(data => {
+              this.props.mapAction.changeMapState({
+                center: [30.994275439683353, -92.3121500015259],
+                zoom: 7,
+                position: "LA",
+                geodata: data,
+                geokey: shortid.generate()
+              })
+            })
+        }
+
+        else if (feature.properties.NAME === "Mississippi") {
+          api.map.getMap("mississippi/districting").then(res => res.json())
+            .then(data => {
+              this.props.mapAction.changeMapState({
+                center: [33.07784183741983, -89.70268249511719],
+                zoom: 7,
+                position: "MI",
                 geodata: data,
                 geokey: shortid.generate()
               })
@@ -229,12 +258,6 @@ class leafletMap extends React.Component {
             State_Name: feature.properties.NAME,
             State_Land: feature.properties.density,
             PRECINCT_N: feature.properties.PRECINCT_N,
-            PRES16D: feature.properties.PRES16D,
-            PRES16R: feature.properties.PRES16R,
-            PRES16L: feature.properties.PRES16L,
-            SEN16D: feature.properties.SEN16D,
-            SEN16R: feature.properties.SEN16R,
-            SEN16L: feature.properties.SEN16L,
             TOTPOP: feature.properties.TOTPOP,
             VAP: feature.properties.VAP,
             HVAP: feature.properties.HVAP,
@@ -243,7 +266,14 @@ class leafletMap extends React.Component {
             AMINVAP: feature.properties.AMINVAP,
             ASIANVAP: feature.properties.ASIANVAP,
             NHPIVAP: feature.properties.NHPIVAP,
-            OTHERVAP: feature.properties.OTHERVAP
+            OTHERVAP: feature.properties.OTHERVAP,
+            WHITE: feature.properties.WHITE,
+            BLACK: feature.properties.BLACK,
+            HISP: feature.properties.HISP,
+            AMIN: feature.properties.AMIN,
+            OTHER: feature.properties.OTHER,
+            ASIAN: feature.properties.ASIAN,
+            NHPI: feature.properties.NHPI
           },
         })
 

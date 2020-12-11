@@ -41,16 +41,15 @@ class ResultBox extends React.Component {
                 title="Job detail" onClick={this.changeCurrentRes.bind(this)}
                 hoverable
                  extra={
+                     this.props.data.state === 'completed' ? <div><DeleteModal onClick={e =>{e.stopPropagation()}}
+                     jobid = {this.props.data.jobId}
+                     handleCancelCallback={this.props.handleCancelCallback}
+                     ></DeleteModal> </div>:
                      <div>
                     <CancelModal onClick={e =>{e.stopPropagation()}}
                      jobid = {this.props.data.jobId}>
                     handleCancelCallback={this.props.handleCancelCallback}
-
                      </CancelModal>
-                    <DeleteModal onClick={e =>{e.stopPropagation()}}
-                     jobid = {this.props.data.jobId}
-                     handleCancelCallback={this.props.handleCancelCallback}
-                     ></DeleteModal> 
                     </div>
                  }
                 style={{ width: 300, marginLeft: ' 20px', marginBottom: '20px' }}>

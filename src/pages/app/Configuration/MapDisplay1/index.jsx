@@ -19,7 +19,7 @@ class MapDisplay1 extends React.Component {
   }
 
   handleZoomGeorgia = (event) => {
-    api.map.getMap("georgia").then(res => res.json())
+    api.map.getMap("georgia/districting").then(res => res.json())
       .then(data => {
         this.props.mapAction.changeMapState({
           center: [32.69020691781246, -83.58756508528708],
@@ -32,19 +32,29 @@ class MapDisplay1 extends React.Component {
   }
 
   handleZoomLouisiana = (event) => {
-    this.props.mapAction.changeMapState({
-      center: [30.994275439683353, -92.3121500015259],
-      zoom: 7,
-      position: "LA"
-    })
+    api.map.getMap("louisiana/districting").then(res => res.json())
+      .then(data => {
+        this.props.mapAction.changeMapState({
+          center: [30.994275439683353, -92.3121500015259],
+          zoom: 7,
+          position: "LA",
+          geodata: data,
+          geokey: shortid.generate()
+        })
+      })
   }
 
   handleZoomMississippi = (event) => {
-    this.props.mapAction.changeMapState({
-      center: [33.07784183741983, -89.70268249511719],
-      zoom: 7,
-      position: "MS"
-    })
+    api.map.getMap("mississippi/districting").then(res => res.json())
+      .then(data => {
+        this.props.mapAction.changeMapState({
+          center: [33.07784183741983, -89.70268249511719],
+          zoom: 7,
+          position: "MI",
+          geodata: data,
+          geokey: shortid.generate()
+        })
+      })
   }
 
   render() {

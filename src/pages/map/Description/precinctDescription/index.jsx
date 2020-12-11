@@ -22,7 +22,26 @@ export default class Description extends React.Component {
               style = {{opacity :this.props.opacity}}
               bordered = {true}
               size={this.state.size}
+              column = {4}
             >
+              <Descriptions.Item  label="Total population:" >
+                {this.props.descriptionInfo.TOTPOP}
+              </Descriptions.Item>
+              <Descriptions.Item  label="White population:" >
+                {this.props.descriptionInfo.WHITE}
+              </Descriptions.Item>
+              <Descriptions.Item  label="Black population:" >
+                {this.props.descriptionInfo.BLACK}
+              </Descriptions.Item>
+              <Descriptions.Item  label="Hispanic population:" >
+                {this.props.descriptionInfo.HISP}
+              </Descriptions.Item>
+              <Descriptions.Item  label="Asian population:" >
+                {this.props.descriptionInfo.ASIAN}
+              </Descriptions.Item>
+              <Descriptions.Item  label="American Indian population:" >
+                {this.props.descriptionInfo.AMIN}
+              </Descriptions.Item>
               <Descriptions.Item  label="Total voting age population:" >
                 {this.props.descriptionInfo.VAP}
               </Descriptions.Item>
@@ -41,9 +60,6 @@ export default class Description extends React.Component {
               <Descriptions.Item label="American Indian voting age population:" >
               {this.props.descriptionInfo.AMINVAP}
               </Descriptions.Item>
-              {/* <Descriptions.Item label="Other race voting age population:" >
-              {this.props.descriptionInfo.OTHERVAP}
-              </Descriptions.Item> */}
             </Descriptions>
           </div>
         );
