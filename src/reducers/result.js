@@ -2,7 +2,10 @@ import * as Result from "../constans/result"
 
 const initState = {
     jobid: -1,
-    status: "no"
+    status: "no",
+    boxData: [],
+    minorities : [],
+    demographic : []
   }
 
 
@@ -12,6 +15,9 @@ const result = (state=initState,action) =>{
             return{
                 jobid:action.data.jobid,
                 status:action.data.status,
+                boxData : action.data.boxData ? action.data.boxData : [],
+                minorities : action.data.minorities ? action.data.minorities :[],
+                demographic : action.data.demographic ? action.data.demographic :[],
             }
     
         default:

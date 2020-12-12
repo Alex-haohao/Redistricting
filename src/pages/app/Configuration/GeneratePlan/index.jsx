@@ -163,6 +163,7 @@ class GeneratePlan extends React.Component {
                             mode="multiple"
                             allowClear>
                             <Option value="HISPANIC">Hispanic</Option>
+                            <Option value="WHITE">White</Option>
                             <Option value="BLACK">Black</Option>
                             <Option value="ASIAN">Asian</Option>
                             <Option value="NATIVE">American Indian and Alaska Native</Option>

@@ -23,8 +23,9 @@ class App extends React.Component {
           <Content>
             <Layout className="site-layout-background">
               <SiderMenu></SiderMenu>
-              <Content style={{ minHeight: '90vh' }}>
-                {this.props.MapDisplay.isShow ? <Map></Map> : <BoxPlot></BoxPlot>}
+              <Content style={{ minHeight: '90vh'  }}>
+                {this.props.MapDisplay.isShow ? <Map></Map> : <BoxPlot
+                 data = {this.props.Result.boxData} minorities = {this.props.Result.minorities} demographic =  {this.props.Result.demographic} ></BoxPlot>}
               </Content>
             </Layout>
           </Content>
@@ -45,7 +46,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     MapDisplay: state.MapDisplay,
-    PopUp: state.PopUp
+    PopUp: state.PopUp,
+    Result : state.Result
   }
 }
 

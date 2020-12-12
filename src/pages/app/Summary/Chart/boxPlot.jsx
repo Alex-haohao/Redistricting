@@ -10,176 +10,82 @@ import {
   // Legend
 } from "bizcharts";
 import { DataView } from "@antv/data-set";
-import GeorgiaDistrictsDataWithoutGeoposition from "../../../../static/GA_districts_without_geoposition";
+import { Table} from 'antd';
+
 
 export default class Demo extends React.Component {
   render() {
-    const data = [
-      {
-        x: "01",
-        low: 0.01,
-        q1: 0.025,
-        median: 0.05,
-        q3: 0.075,
-        high: 0.1,
-      },
-      {
-        x: "02",
-        low: 0.01,
-        q1: 0.025,
-        median: 0.075,
-        q3: 0.1,
-        high: 0.15,
-      },
-      {
-        x: "03",
-        low: 0.01,
-        q1: 0.05,
-        median: 0.1,
-        q3: 0.15,
-        high: 0.2,
-      },
-      {
-        x: "04",
-        low: 0.05,
-        q1: 0.1,
-        median: 0.15,
-        q3: 0.2,
-        high: 0.25,
-      },
-      {
-        x: "05",
-        low: 0.1,
-        q1: 0.15,
-        median: 0.2,
-        q3: 0.25,
-        high: 0.3,
-      },
-      {
-        x: "06",
-        low: 0.15,
-        q1: 0.2,
-        median: 0.25,
-        q3: 0.3,
-        high: 0.35,
-      },
-      {
-        x: "07",
-        low: 0.2,
-        q1: 0.25,
-        median: 0.3,
-        q3: 0.35,
-        high: 0.4,
-      },
-      {
-        x: "08",
-        low: 0.25,
-        q1: 0.3,
-        median: 0.35,
-        q3: 0.4,
-        high: 0.45,
-      },
-      {
-        x: "09",
-        low: 0.3,
-        q1: 0.35,
-        median: 0.4,
-        q3: 0.45,
-        high: 0.5,
-      },
-      {
-        x: "10",
-        low: 0.35,
-        q1: 0.4,
-        median: 0.45,
-        q3: 0.5,
-        high: 0.55,
-      },
-      {
-        x: "11",
-        low: 0.4,
-        q1: 0.45,
-        median: 0.5,
-        q3: 0.55,
-        high: 0.6,
-      },
-      {
-        x: "12",
-        low: 0.45,
-        q1: 0.5,
-        median: 0.55,
-        q3: 0.6,
-        high: 0.65,
-      },
-      {
-        x: "13",
-        low: 0.5,
-        q1: 0.55,
-        median: 0.6,
-        q3: 0.65,
-        high: 0.7,
-      },
-      {
-        x: "14",
-        low: 0.55,
-        q1: 0.6,
-        median: 0.65,
-        q3: 0.7,
-        high: 0.75,
-      },
-    ];
 
-    // for (let i = 0; i < data.length; i++) {
-    //   let districtId = data[i]["x"];
-    //   let BVAPPercentage = GeorgiaDistrictsDataWithoutGeoposition[districtId]["BVAP%"]
-    //   let rounded = Math.round((BVAPPercentage + Number.EPSILON) * 100) / 100
-    //   data[i]["BVAPPercentage"] = rounded
-    // }
+    let newData = this.props.data
+    let minID = newData[0].boxId
+    newData.forEach(element => {
+      element.boxId = (element.boxId - minID +1).toString()
+    });
 
-    // extract all BVAP% info from the districts
-    let BVAPPercentages = []
-    for (const district in GeorgiaDistrictsDataWithoutGeoposition) {
-      let BVAPPercentage = GeorgiaDistrictsDataWithoutGeoposition[district]["BVAP%"]
-      let rounded = Math.round((BVAPPercentage + Number.EPSILON) * 100) / 100
-      BVAPPercentages.push(rounded)
+
+    const minorities = this.props.minorities.join("+") + " VAP%"
+    const percentage = this.props.minorities.join("+") + " VAPPercentage%"
+
+    let BVAPPercentages = this.props.demographic
+
+    for (let i = 0; i < newData.length; i++) {
+      newData[i]["BVAPPercentage"] = BVAPPercentages[i]
     }
 
-    // sort the BVAP% 
-    BVAPPercentages.sort()
-
-    for (let i = 0; i < data.length; i++) {
-      data[i]["BVAPPercentage"] = BVAPPercentages[i]
-    }
-
-    const dv = new DataView().source(data);
-
+    const dv = new DataView().source(newData);
     dv.transform({
       type: "map",
       callback: (obj) => {
-        obj.range = [obj.low, obj.q1, obj.median, obj.q3, obj.high];
+        obj.range = [obj.min, obj.q1, obj.median, obj.q3, obj.max];
         return obj;
       },
     });
 
     const scale = {
-      x: {
-        alias: 'Indexed Districts', 
+      Districts: {
+        alias: "Districts", 
       },
       BVAPPercentage: {
-        alias: "BVAP%",
+        alias: percentage,
         min: 0,
         max: 1,
         nice: true
       },
       range: {
-        alias: "BVAP%",
+        alias: minorities,
         min: 0,
         max: 1,
         nice: true
       }
     };
 
+    //-------------------------------------------------------------------
+    const columns = [
+      {
+        title: 'District ID',
+        dataIndex: 'ID',
+      },
+      {
+        title: 'Population',
+        dataIndex: 'Population',
+      },
+      {
+        title: 'Population Variation',
+        dataIndex: 'Variation',
+      },
+      {
+        title: 'Compactness',
+        dataIndex: 'Compactness',
+      },
+    ];
+    const data = [
+    ];
+
+
+    //--------------------------------------------------------------------
+
     return (
+      <div>
       <Chart
         height={500}
         data={dv.rows}
@@ -187,8 +93,9 @@ export default class Demo extends React.Component {
         scale={scale}
         padding="auto"
       >
-        <Axis name="x" position="bottom" title />
-        <Axis name="BVAP%" position="left" title />
+        
+        <Axis name="Districts" position="bottom" title />
+        <Axis name="BVAPPercentage" position="left" title />
         <Axis name="range" position="right" title />
 
         <Tooltip
@@ -198,26 +105,27 @@ export default class Demo extends React.Component {
             '<li class="g2-tooltip-list-item" data-index={index} style="margin-bottom:4px;">' +
             '<span style="background-color:{color};" class="g2-tooltip-marker"></span>' +
             "{name}<br/>" +
-            '<span style="padding-left: 16px">high: {high}</span><br/>' +
+            '<span style="padding-left: 16px">max: {max}</span><br/>' +
             '<span style="padding-left: 16px">q3: {q3}</span><br/>' +
             '<span style="padding-left: 16px">median: {median}</span><br/>' +
             '<span style="padding-left: 16px">q1: {q1}</span><br/>' +
-            '<span style="padding-left: 16px">low: {low}</span><br/>' +
+            '<span style="padding-left: 16px">min: {min}</span><br/>' +
             "</li>"
           }
         />
 
         <Point
-          position="x*BVAPPercentage"
+          position="boxId*BVAPPercentage"
           label={["BVAPPercentage", { style: { fill: 'red' } }]}
           style={{
             fill: "rgb(255, 0, 0)",
           }}
           shape='square'
+          tooltip = {false}
         />
 
         <Schema
-          position={"x*range"}
+          position={"boxId*range"}
           shape="box"
           style={{
             stroke: "#545454",
@@ -225,15 +133,15 @@ export default class Demo extends React.Component {
             fillOpacity: 0.3,
           }}
           tooltip={[
-            "x*low*q1*median*q3*high",
-            (x, low, q1, median, q3, high) => {
+            "boxId*min*q1*median*q3*max",
+            (boxId, min, q1, median, q3, max) => {
               return {
-                name: x,
-                low,
+                name: boxId,
+                min,
                 q1,
                 median,
                 q3,
-                high,
+                max,
               };
             },
           ]}
@@ -248,6 +156,10 @@ export default class Demo extends React.Component {
           }}
         />
       </Chart>
+      <br></br><br></br>
+      <h3>Summary</h3>
+      <Table columns={columns} dataSource={data} size="middle" />
+      </div>
     );
   }
 }
