@@ -11,6 +11,7 @@ const initState = {
     randomid:-1,
     extremeDemographic:-1,
     randomDemographic:-1,
+    jobData : {}
   }
 
 
@@ -28,6 +29,7 @@ const result = (state=initState,action) =>{
                 averageid: action.data.averageid ? action.data.averageid : -1,
                 extremeid: action.data.extremeid ? action.data.extremeid : -1,
                 randomid: action.data.randomid ? action.data.randomid : -1,
+                jobData:action.data.jobData ? action.data.jobData : -1,
             }
     
         default:

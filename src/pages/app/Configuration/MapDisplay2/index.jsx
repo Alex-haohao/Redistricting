@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import { Radio } from 'antd';
-import { Row, Col, Layout, Button } from 'antd';
+import { Row, Col, Layout, Button,Checkbox } from 'antd';
 import stateGeoData from '../../../../static/stateGeoJson'
 import shortid from "shortid"
 import api from "../../../../api"
@@ -19,6 +19,8 @@ class MapDisplay2 extends React.Component {
     this.state = {
       colorvalue: "default",
       levelvalue: 1,
+      isprecicnt: false,
+      isdistrict: false
     };
   }
 
@@ -37,10 +39,98 @@ class MapDisplay2 extends React.Component {
       zoom: 7,
       position: this.props.Mapstate.position,
       geodata: this.props.Mapstate.geodata,
+      districtgeodata: this.props.Mapstate.districtgeodata,
       geokey: shortid.generate()
     })
 
   };
+
+  onDistrctChange= e=>{
+    this.setState({
+      isdistrict: e.target.checked,
+    });
+    if(e.target.checked ==true){
+      if (this.props.Mapstate.position !== 'US') {
+        let stateName = ""
+        if (this.props.Mapstate.position === 'GA') {
+          stateName = "georgia/districting"
+        }
+        else if (this.props.Mapstate.position === 'LA') {
+          stateName = "louisiana/districting"
+        }
+        else if (this.props.Mapstate.position === 'MI') {
+          stateName = "mississippi/districting"
+        }
+
+        api.map.getMap(stateName).then(res => res.json())
+          .then(data => {
+            this.props.mapAction.changeMapState({
+              center: this.props.Mapstate.center,
+              zoom: this.props.Mapstate.zoom,
+              position: this.props.Mapstate.position,
+              geodata: this.props.Mapstate.geodata,
+              districtgeodata: data,
+              geokey: shortid.generate()
+            })
+          })
+      }
+    }
+    else{
+        this.props.mapAction.changeMapState({
+          center: this.props.Mapstate.center,
+          zoom: this.props.Mapstate.zoom,
+          position: this.props.Mapstate.position,
+          geodata: this.props.Mapstate.geodata,
+          districtgeodata: '',
+          geokey: shortid.generate()
+        })
+    }
+  }
+
+
+  onPrecinctChange= e=>{
+    this.setState({
+      isprecicnt: e.target.checked,
+    });
+    console.log(e.target.checked)
+    if(e.target.checked ==true){
+      if (this.props.Mapstate.position !== 'US') {
+        let stateName = ""
+        if (this.props.Mapstate.position === 'GA') {
+          stateName = "georgia"
+        }
+        else if (this.props.Mapstate.position === 'LA') {
+          stateName = "louisiana"
+        }
+        else if (this.props.Mapstate.position === 'MI') {
+          stateName = "mississippi"
+        }
+
+        api.map.getMap(stateName).then(res => res.json())
+          .then(data => {
+            this.props.mapAction.changeMapState({
+              center: this.props.Mapstate.center,
+              zoom: this.props.Mapstate.zoom,
+              position: this.props.Mapstate.position,
+              geodata: data,
+              districtgeodata: this.props.Mapstate.districtgeodata,
+              geokey: shortid.generate()
+            })
+          })
+      }
+    }
+    else{
+        this.props.mapAction.changeMapState({
+          center: this.props.Mapstate.center,
+          zoom: this.props.Mapstate.zoom,
+          position: this.props.Mapstate.position,
+          geodata: '',
+          districtgeodata: this.props.Mapstate.districtgeodata,
+          geokey: shortid.generate()
+        })
+    }
+  }
+
 
   levelOnChange = e => {
     this.setState({
@@ -107,7 +197,8 @@ class MapDisplay2 extends React.Component {
       center: [37.8, -96],
       zoom: 4,
       position: "US",
-      geodata: stateGeoData
+      geodata: stateGeoData,
+      districtgeodata: ''
     })
 
     this.props.mapDisplayAction.changeMapDisplay({
@@ -121,7 +212,9 @@ class MapDisplay2 extends React.Component {
     })
   }
 
+  
   render() {
+    let distrcitchecked = this.props.Mapstate.districtgeodata !='' ? true : false
     const radioStyle = {
       display: 'block',
       height: '30px',
@@ -130,8 +223,11 @@ class MapDisplay2 extends React.Component {
     };
     const { colorvalue, levelvalue } = this.state;
 
-    let currentMode = false
-    if (levelvalue !== "district" && levelvalue !== "precinct") {
+    let currentMode = false    
+    if (this.state.isprecicnt === false && this.state.isdistrict === false) {
+      currentMode = false
+    }
+    else{
       currentMode = true
     }
 
@@ -150,7 +246,7 @@ class MapDisplay2 extends React.Component {
           </Col>
         </Row>
         <p style={{ marginLeft: "10px", fontSize: "20px" }}> Display map by population density</p>
-        <Radio.Group disabled={currentMode} onChange={this.colorOnChange} value={colorvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}
+        <Radio.Group disabled={!currentMode} onChange={this.colorOnChange} value={colorvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}
         >
           <Radio style={radioStyle} value={"default"} size="large">
             Default
@@ -167,21 +263,22 @@ class MapDisplay2 extends React.Component {
           <Radio style={radioStyle} value={"AmericanIndian"} size="large">
             American Indian
             </Radio>
-          <Radio style={radioStyle} value={"otherDensity"} size="large">
-            Other race
-            </Radio>
+
         </Radio.Group>
 
         <br /><br /><br />
         <p style={{ marginLeft: "10px", fontSize: "20px" }}>Filter Boundary </p>
-        <Radio.Group disabled={filtermode} onChange={this.levelOnChange} value={levelvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}>
+        {/* <Radio.Group disabled={filtermode} onChange={this.levelOnChange} value={levelvalue} size="large" style={{ marginLeft: "10px", fontSize: "20px" }}>
           <Radio style={radioStyle} value={"district"} size="large">
             District
             </Radio>
           <Radio style={radioStyle} value={"precinct"} size="large">
             Precinct
             </Radio>
-        </Radio.Group>
+        </Radio.Group> */}
+
+        <Checkbox disabled={filtermode} checked={distrcitchecked} onChange={this.onDistrctChange}>District</Checkbox>
+        <Checkbox disabled={filtermode} onChange={this.onPrecinctChange}>Precinct</Checkbox>
 
         <br /><br /><br />
 

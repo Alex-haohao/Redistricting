@@ -8,13 +8,15 @@ import shortid from 'shortid'
 import api from "../../../../api"
 import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
+import stategeo from '../../../../static/stateGeoJson'
 
 class MapDisplay1 extends React.Component {
   handleZoomUS = (event) => {
     this.props.mapAction.changeMapState({
       center: [37.8, -96],
       zoom: 4,
-      position: "US"
+      position: "US",
+      geodata: stategeo
     })
   }
 
@@ -25,7 +27,8 @@ class MapDisplay1 extends React.Component {
           center: [32.69020691781246, -83.58756508528708],
           zoom: 7,
           position: "GA",
-          geodata: data,
+          geodata: '',
+          districtgeodata:data,
           geokey: shortid.generate()
         })
       })
@@ -38,7 +41,8 @@ class MapDisplay1 extends React.Component {
           center: [30.994275439683353, -92.3121500015259],
           zoom: 7,
           position: "LA",
-          geodata: data,
+          geodata: '',
+          districtgeodata:data,
           geokey: shortid.generate()
         })
       })
@@ -51,7 +55,8 @@ class MapDisplay1 extends React.Component {
           center: [33.07784183741983, -89.70268249511719],
           zoom: 7,
           position: "MI",
-          geodata: data,
+          geodata: '',
+          districtgeodata: data,
           geokey: shortid.generate()
         })
       })

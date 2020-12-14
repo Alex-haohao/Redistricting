@@ -5,7 +5,7 @@ import * as mapAction from '../../../../actions/mapAction'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as PopUpAction from '../../../../actions/showPopUp'
 import { InputNumber } from 'antd';
-import { Select, Layout, Slider, Row, Col, Button, Progress } from 'antd';
+import { Select, Layout, Slider, Row, Col, Button, Progress ,Modal} from 'antd';
 import { addResult, deleteResult } from '../../../../actions/totalResult'
 import api from '../../../../api'
 
@@ -24,8 +24,18 @@ class GeneratePlan extends React.Component {
             percent: 0,
             colorvalue: 1,
             levelvalue: 1,
+            message:'',
+            visible:false
         };
     }
+
+    handleOk = (e) => {
+        e.preventDefault();
+        e.stopPropagation()
+              this.setState({
+                visible: false,
+              });
+        }
 
     handleStateChange = (value) => {
         this.setState({
@@ -67,8 +77,12 @@ class GeneratePlan extends React.Component {
             minorities: this.state.MinorityGroup,
         }
 
-        api.jobs.addJob(data).then(res => {
-            console.log(res)
+        api.jobs.addJob(data).then(res => res.json()
+        ).then(data =>{
+            this.setState({
+                visible: true,
+                message:data
+              })
         })
 
         let timer = setInterval(() => {
@@ -80,9 +94,6 @@ class GeneratePlan extends React.Component {
             if (this.state.percent === 100) {
                 setTimeout(() => {
                     clearInterval(timer);
-                    this.props.PopUpAction.changePopUp({
-                        isPopUp: true,
-                    })
                     this.setState({ percent: 0 });
                 }, 500);
             }
@@ -193,6 +204,15 @@ class GeneratePlan extends React.Component {
                         <Progress percent={this.state.percent} />
                     </Col>
                 </Row>
+
+                <Modal
+          title="Success"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+        >
+          <p>Job ID: {this.state.message.jobId} submitted</p>
+        </Modal>
+
             </Content>
         );
     }

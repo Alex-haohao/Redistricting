@@ -11,7 +11,7 @@ import {
   Legend,
 } from "bizcharts";
 import { DataView } from "@antv/data-set";
-import { Card,Checkbox } from 'antd';
+import { Card, Checkbox } from 'antd';
 import api from '../../../../api'
 const CheckboxGroup = Checkbox.Group;
 const defaultCheckedList = [];
@@ -22,22 +22,22 @@ class Demo extends React.Component {
       checkedList
     });
     if (checkedList.findIndex(element => element === "Average") != -1) {
-      this.setState({average:true})
+      this.setState({ average: true })
     }
-    else{
-      this.setState({average:false})
+    else {
+      this.setState({ average: false })
     }
     if (checkedList.findIndex(element => element === "Random") != -1) {
-      this.setState({random:true})
+      this.setState({ random: true })
     }
-    else{
-      this.setState({random:false})
+    else {
+      this.setState({ random: false })
     }
     if (checkedList.findIndex(element => element === "Extreme") != -1) {
-      this.setState({extreme:true})
+      this.setState({ extreme: true })
     }
-    else{
-      this.setState({extreme:false})
+    else {
+      this.setState({ extreme: false })
     }
   }
 
@@ -58,10 +58,10 @@ class Demo extends React.Component {
         });
       });
   }
-  
+
 
   render() {
-    
+
     let newData = this.props.data
     let minID = newData[0].boxId
     newData.forEach(element => {
@@ -92,12 +92,12 @@ class Demo extends React.Component {
     });
 
     const scale = {
-      extreme:{
+      extreme: {
         min: 0,
         max: 1,
         nice: true
       },
-      random:{
+      random: {
         min: 0,
         max: 1,
         nice: true
@@ -111,7 +111,7 @@ class Demo extends React.Component {
         max: 1,
         nice: true
       },
-      
+
       range: {
         alias: minorities,
         min: 0,
@@ -121,6 +121,21 @@ class Demo extends React.Component {
     };
     const plainOptions = ['Average', 'Extreme', 'Random'];
 
+    let compactName = ""
+    if(this.props.Result.jobData.compactnessGoal <= 0.3){
+      compactName = 'Least Compactness '
+    }
+    else if(this.props.Result.jobData.compactnessGoal == 0.4){
+      compactName = 'less Compactness'
+    }
+    else if(this.props.Result.jobData.compactnessGoal == 0.5){
+      compactName = 'more Compactness'
+    }
+    else if(this.props.Result.jobData.compactnessGoal >= 0.6){
+      compactName = 'very Compactness'
+    }
+
+
     return (
       <div style={{ maxHeight: "100vh" }}>
         <CheckboxGroup
@@ -129,47 +144,47 @@ class Demo extends React.Component {
           onChange={this.onChange}
         />
         <br></br>
-       <div className="box" style={{marginLeft:60,background:"red",border:"1px solid black"}}></div>
-        <div className="box" style={{marginLeft:60,background:"black",border:"1px solid black"}}></div>
-         <div className="box" style={{marginLeft:60,background:"blue",border:"1px solid black"}}></div>
+        <div className="box" style={{ marginLeft: 60, background: "red", border: "1px solid black" }}></div>
+        <div className="box" style={{ marginLeft: 60, background: "black", border: "1px solid black" }}></div>
+        <div className="box" style={{ marginLeft: 60, background: "blue", border: "1px solid black" }}></div>
 
         <Chart
           height={500}
           data={dv}
-          
+
           scale={scale}
           padding="auto"
           forceFit
         >
 
-        <Geom
+          <Geom
             type="point"
             position="boxId*BVAPPercentage"
             opacity={0.8}
             shape={"square"}
             color={"red"}
-            size={this.state.average ===true ?4 :1}
-            tooltip = {false}
-            
-         />
+            size={this.state.average === true ? 4 : 1}
+            tooltip={false}
+
+          />
           <Geom
             type="point"
             position="boxId*extreme"
             opacity={0.8}
             shape={"square"}
             color={"black"}
-            size={this.state.extreme ===true ? 4 : 1}
-            tooltip = {false}
-            
-          /> 
-          
-           
-            <Geom
+            size={this.state.extreme === true ? 4 : 1}
+            tooltip={false}
+
+          />
+
+
+          <Geom
             type="point"
             position="boxId*random"
-            opacity={0.8}             
-            size={this.state.random ===true ?4 :1}
-            tooltip = {false}
+            opacity={0.8}
+            size={this.state.random === true ? 4 : 1}
+            tooltip={false}
             shape={"square"}
             color={"blue"}
           />
@@ -194,7 +209,7 @@ class Demo extends React.Component {
             }
           />
 
-         
+
 
           <Schema
             position={"boxId*range"}
@@ -230,13 +245,22 @@ class Demo extends React.Component {
         <br></br><br></br>
         <h3>Log</h3>
 
-        <Card title="Log summary" style={{ width: 600, maxHeight: 350, overflow: "scroll" }}>
+        <Card title="Log summary" style={{ display: "inline-block", width: 600, maxHeight: 350, overflow: "scroll" }}>
 
           <pre id="contents">{this.state.logFile}</pre>
 
         </Card>
 
-            
+        <Card title="Job summary" style={{ display: "inline-block", width: 600, maxHeight: 350, overflow: "scroll" }}>
+
+          <p style={{ fontSize: "18px" }}>State: {this.props.Result.jobData.state}</p>
+          <p style={{ fontSize: "18px" }}>Plan numbers: {this.props.Result.jobData.numberOfDistrictings}</p>
+          <p style={{ fontSize: "18px" }}>Compactness: {compactName}</p>
+          <p style={{ fontSize: "18px" }}>Population Difference: {this.props.Result.jobData.populationDifference}</p>
+
+        </Card>
+
+
       </div>
     );
   }

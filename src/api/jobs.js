@@ -24,6 +24,9 @@ const jobs = {
     getlog(data){
         return getData(base.job + '/' + data + '/log')
     },
+    getsummary(data){
+        return getData(base.job + '/' + data + '/summary')
+    },
     getCompleted(){
         return getData(base.jobs + '/update/completed')
     },

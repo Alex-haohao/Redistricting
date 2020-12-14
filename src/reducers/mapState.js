@@ -7,7 +7,8 @@ const initState = {
     zoom: 4,
     position:"US",
     mode:"state",
-    geokey:"abcde"
+    geokey:"abcde",
+    districtgeodata:''
   }
 
 const geomap = (state=initState,action) =>{
@@ -17,7 +18,8 @@ const geomap = (state=initState,action) =>{
                 center:JSON.parse(JSON.stringify(action.data.center)),
                 zoom:action.data.zoom,
                 position:action.data.position,
-                geodata: action.data.geodata ? action.data.geodata : stateGeoData,
+                geodata: action.data.geodata ? action.data.geodata : '',
+                districtgeodata: action.data.districtgeodata ? action.data.districtgeodata : '',
                 geokey:action.data.geokey? action.data.geokey:"abcde",
                 mode : action.data.mode ? action.data.mode : "precinct"
             }

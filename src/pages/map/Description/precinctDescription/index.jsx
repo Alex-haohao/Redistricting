@@ -25,40 +25,40 @@ export default class Description extends React.Component {
               column = {4}
             >
               <Descriptions.Item  label="Total population:" >
-                {this.props.descriptionInfo.TOTPOP}
+              {String(this.props.descriptionInfo.TOTPOP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
               <Descriptions.Item  label="White population:" >
-                {this.props.descriptionInfo.WHITE}
+                {String(this.props.descriptionInfo.WHITE).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
-              <Descriptions.Item  label="Black population:" >
-                {this.props.descriptionInfo.BLACK}
+              <Descriptions.Item  label="African American population:" >
+                {String(this.props.descriptionInfo.BLACK).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
               <Descriptions.Item  label="Hispanic population:" >
-                {this.props.descriptionInfo.HISP}
+                {String(this.props.descriptionInfo.HISP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
               <Descriptions.Item  label="Asian population:" >
-                {this.props.descriptionInfo.ASIAN}
+                {String(this.props.descriptionInfo.ASIAN).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
               <Descriptions.Item  label="American Indian population:" >
-                {this.props.descriptionInfo.AMIN}
+                {String(this.props.descriptionInfo.AMIN).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
-              <Descriptions.Item  label="Total voting age population:" >
-                {this.props.descriptionInfo.VAP}
+              <Descriptions.Item  label="Total VAP:" >
+                {String(this.props.descriptionInfo.VAP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
-              <Descriptions.Item label="Hispanic voting age population:" >
-                {this.props.descriptionInfo.HVAP}
+              <Descriptions.Item label="Hispanic VAP:" >
+                {String(this.props.descriptionInfo.HVAP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
-              <Descriptions.Item label="White voting age population:" >
-              {this.props.descriptionInfo.WVAP}
+              <Descriptions.Item label="White VAP:" >
+              {String(this.props.descriptionInfo.WVAP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
-              <Descriptions.Item label="Black voting age population:" >
-              {this.props.descriptionInfo.BVAP}
+              <Descriptions.Item label="African American VAP:" >
+              {String(this.props.descriptionInfo.BVAP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
-              <Descriptions.Item label="Asian voting age population:" >
-              {this.props.descriptionInfo.ASIANVAP}
+              <Descriptions.Item label="Asian voting VAP:" >
+              {String(this.props.descriptionInfo.ASIANVAP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
-              <Descriptions.Item label="American Indian voting age population:" >
-              {this.props.descriptionInfo.AMINVAP}
+              <Descriptions.Item label="American Indian VAP:" >
+              {String(this.props.descriptionInfo.AMINVAP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
               </Descriptions.Item>
             </Descriptions>
           </div>

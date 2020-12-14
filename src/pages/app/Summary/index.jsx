@@ -140,14 +140,14 @@ class Summary extends React.Component {
         <br />
 
         <h3>District boundary color</h3>
-        <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"blue",border:"1px solid black"}}></div>Current</p>
+        <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"green",border:"1px solid black"}}></div>Current</p>
         <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"white",border:"1px solid black"}}></div>Average</p>
         <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"red",border:"1px solid black"}}></div>Extreme</p>
         <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"yellow",border:"1px solid black"}}></div>Random</p>
 
         <br />
         <br />
-        <span style={{ fontSize: 25, marginLeft: 30 }}>Download Districting Plan</span>
+        {/* <span style={{ fontSize: 25, marginLeft: 30 }}>Download Districting Plan</span>
         <br />
         <Button
         disabled ={isAble}
@@ -155,7 +155,7 @@ class Summary extends React.Component {
           onClick={this.handleDownloadClick}
         >
           Download
-        </Button>
+        </Button> */}
       </div>
     )
   }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../../../actions/mapDisplay'
 import * as resultAction from '../../../../actions/resultAction'
-import { Card, Collapse,Button } from 'antd';
+import { Card, Collapse, Button } from 'antd';
 import DeleteModal from "../DeleteModal"
 import CancelModal from "../CancelPopUp"
 import './style.less'
@@ -56,10 +56,11 @@ class ResultBox extends React.Component {
             minorities: this.props.data.minorities,
             demographic: temp,
             extremeDemographic: extremetemp,
-            randomDemographic:randomtemp,
-            averageid:averageid,
-            extremeid:extremeid,
-            randomid:randomid
+            randomDemographic: randomtemp,
+            averageid: averageid,
+            extremeid: extremeid,
+            randomid: randomid,
+            jobData: this.props.data
         })
         this.props.mapDisplayAction.changeMapDisplay({
             isShow: this.props.MapDisplay.isShow,
@@ -69,10 +70,24 @@ class ResultBox extends React.Component {
     }
 
     render() {
-        let isSummary = (this.props.data.status === "Completed") ? false :true
+        let isSummary = (this.props.data.status === "Completed") ? false : true
+
+        let compactName = ""
+        if (this.props.data.compactnessGoal <= 0.3) {
+            compactName = 'Least Compactness '
+        }
+        else if (this.props.data.compactnessGoal == 0.4) {
+            compactName = 'less Compactness'
+        }
+        else if (this.props.data.compactnessGoal == 0.5) {
+            compactName = 'more Compactness'
+        }
+        else if (this.props.data.compactnessGoal >= 0.6) {
+            compactName = 'very Compactness'
+        }
         return (
             <Card
-                title="Job detail" 
+                title="Job detail"
                 hoverable
                 extra={
                     this.props.data.status === "Completed" ? <div><DeleteModal onClick={e => { e.stopPropagation() }}
@@ -91,11 +106,11 @@ class ResultBox extends React.Component {
                 <p style={{ fontSize: "18px" }}>status: {this.props.data.status}</p>
                 <Collapse onClick={e => { e.stopPropagation() }}>
                     <Panel header="More detail" key="1">
-                    <p style={{ fontSize: "18px" }}>State: {this.props.data.state}</p>
-                <p style={{ fontSize: "18px" }}>Plan numbers: {this.props.data.numberOfDistrictings}</p>
-                <p style={{ fontSize: "18px" }}>Compactness: {this.props.data.compactnessGoal}</p>
-                <p style={{ fontSize: "18px" }}>Population Difference: {this.props.data.populationDifference}</p>
-                <Button type="primary" disabled = {isSummary} onClick={this.changeCurrentRes.bind(this)}> Summary </Button>
+                        <p style={{ fontSize: "18px" }}>State: {this.props.data.state}</p>
+                        <p style={{ fontSize: "18px" }}>Plan numbers: {this.props.data.numberOfDistrictings}</p>
+                        <p style={{ fontSize: "18px" }}>Compactness: {this.props.data.compactnessGoal}</p>
+                        <p style={{ fontSize: "18px" }}>Population Difference: {this.props.data.populationDifference}</p>
+                        <Button type="primary" disabled={isSummary} onClick={this.changeCurrentRes.bind(this)}> Summary </Button>
                     </Panel>
                 </Collapse>
             </Card>

@@ -25,6 +25,9 @@ export default class Description extends React.Component {
               size={this.state.size}
               column = {4}
             >
+              <Descriptions.Item  label="Total population:" >
+                {String(this.props.descriptionInfo.TOTPOP).replace(/(.)(?=(\d{3})+$)/g,'$1,')}
+              </Descriptions.Item>
               <Descriptions.Item  label="White population:" >
                 {this.props.descriptionInfo.WHITE}
               </Descriptions.Item>
@@ -58,9 +61,6 @@ export default class Description extends React.Component {
               <Descriptions.Item label="American Indian voting age population:" >
               {this.props.descriptionInfo.AMINVAP}
               </Descriptions.Item>
-              {/* <Descriptions.Item label="Other race voting age population:" >
-              {this.props.descriptionInfo.OTHERVAP}
-              </Descriptions.Item> */}
             </Descriptions>
       </div>
     );

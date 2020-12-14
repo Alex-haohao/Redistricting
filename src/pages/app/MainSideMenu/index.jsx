@@ -39,7 +39,8 @@ class Configuration extends React.Component {
       center: [37.8, -96],
       zoom: 4,
       position: "US",
-      geodata: stateGeoData
+      geodata: stateGeoData,
+      districtgeodata: ''
     })
   }
 

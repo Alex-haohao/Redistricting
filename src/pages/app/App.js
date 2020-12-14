@@ -18,7 +18,7 @@ class App extends React.Component {
   render() {
     return (
       <Layout>
-        <Header></Header>
+        {/* <Header></Header> */}
         {this.props.PopUp.isPopUp ? <SuccessPopUp></SuccessPopUp> : null}
         <Row>
           <Content>
