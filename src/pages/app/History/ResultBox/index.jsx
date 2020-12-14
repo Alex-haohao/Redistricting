@@ -27,15 +27,39 @@ class ResultBox extends React.Component {
     changeCurrentRes = (e) => {
         e.stopPropagation()
         let demographic = this.props.data.average.districts
+        let extremeDemographic = this.props.data.extreme.districts
+        let randomDemographic = this.props.data.random.districts
+
         let temp = [];
+        let extremetemp = [];
+        let randomtemp = [];
+
+        let averageid = this.props.data.average.districtingId
+        let extremeid = this.props.data.extreme.districtingId
+        let randomid = this.props.data.random.districtingId
+
         demographic.forEach(element => {
             temp.push(element.demographics.minoritiesVapPercentage)
         });
+
+        extremeDemographic.forEach(element => {
+            extremetemp.push(element.demographics.minoritiesVapPercentage)
+        });
+
+        randomDemographic.forEach(element => {
+            randomtemp.push(element.demographics.minoritiesVapPercentage)
+        });
+
         this.props.resultAction.changeCurrentResult({
             jobid: this.props.data.jobId,
             boxData: this.props.data.summary,
             minorities: this.props.data.minorities,
-            demographic: temp
+            demographic: temp,
+            extremeDemographic: extremetemp,
+            randomDemographic:randomtemp,
+            averageid:averageid,
+            extremeid:extremeid,
+            randomid:randomid
         })
         this.props.mapDisplayAction.changeMapDisplay({
             isShow: this.props.MapDisplay.isShow,
@@ -45,6 +69,7 @@ class ResultBox extends React.Component {
     }
 
     render() {
+        let isSummary = (this.props.data.status === "Completed") ? false :true
         return (
             <Card
                 title="Job detail" 
@@ -70,7 +95,7 @@ class ResultBox extends React.Component {
                 <p style={{ fontSize: "18px" }}>Plan numbers: {this.props.data.numberOfDistrictings}</p>
                 <p style={{ fontSize: "18px" }}>Compactness: {this.props.data.compactnessGoal}</p>
                 <p style={{ fontSize: "18px" }}>Population Difference: {this.props.data.populationDifference}</p>
-                <Button type="primary" onClick={this.changeCurrentRes.bind(this)}> Summary </Button>
+                <Button type="primary" disabled = {isSummary} onClick={this.changeCurrentRes.bind(this)}> Summary </Button>
                     </Panel>
                 </Collapse>
             </Card>

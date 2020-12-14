@@ -33,9 +33,16 @@ class Result extends React.Component {
     api.jobs.updateJob()
         .then(res => {
           console.log(res)
-          // this.props.handleCancelCallback()  // also for update the view
-        })
- 
+          this.props.handleCancelCallback()  // also for update the view
+      }).then(res =>{
+        api.jobs.getCompleted()
+        .then(res => {
+          console.log(res)
+          this.props.handleCancelCallback()  // also for update the view
+      })
+      }).then(res=>{
+        this.props.handleCancelCallback()  // also for update the view
+      })
   }
 
   render() {

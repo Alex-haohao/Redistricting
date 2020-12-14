@@ -76,45 +76,172 @@ class leafletMap extends React.Component {
 
 
   onEachRandomFeature(feature, layer) {
-    function random_rgba() {
-      var o = Math.round, r = Math.random, s = 255;
-      return 'rgb(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
-    }
-
-    let color = random_rgba();
+   
     layer.setStyle({
-      fillColor: color,
       opacity: 0.5,
-      color: 'black'
+      color: 'yellow',
+      weight:1
     })
+
+    let tempfillcolor = layer.options.fillColor
+    let tempopacity = layer.options.opacity
+
+    layer.on({
+      mouseover: (e) => {
+        this.setState({ descriptDisplay: 1, })
+        this.setState({
+          descriptDisplay: 1,
+          descriptionInfo: {
+            State_Name: feature.properties.NAME,
+            State_Land: feature.properties.density,
+            PRECINCT_N: feature.properties.PRECINCT_N,
+            TOTPOP: feature.properties.TOTPOP,
+            VAP: feature.properties.VAP,
+            HVAP: feature.properties.HVAP,
+            WVAP: feature.properties.WVAP,
+            BVAP: feature.properties.BVAP,
+            AMINVAP: feature.properties.AMINVAP,
+            ASIANVAP: feature.properties.ASIANVAP,
+            NHPIVAP: feature.properties.NHPIVAP,
+            OTHERVAP: feature.properties.OTHERVAP,
+            WHITE: feature.properties.WHITE,
+            BLACK: feature.properties.BLACK,
+            HISP: feature.properties.HISP,
+            AMIN: feature.properties.AMIN,
+            OTHER: feature.properties.OTHER,
+            ASIAN: feature.properties.ASIAN,
+            NHPI: feature.properties.NHPI
+          },
+        })
+
+        layer.setStyle({
+          fillColor: 'red',
+          opacity: 1
+        })
+      },
+
+      mouseout: (e) => {
+        this.setState({ descriptDisplay: 0 })
+        layer.setStyle({
+          fillColor: tempfillcolor,
+          opacity: tempopacity
+        })
+      },
+    });
+
   }
 
   onEachExtremeFeature(feature, layer) {
-    function random_rgba() {
-      var o = Math.round, r = Math.random, s = 255;
-      return 'rgb(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
-    }
 
-    let color = random_rgba();
     layer.setStyle({
-      fillColor: color,
       opacity: 0.5,
-      color: 'red'
+      color: 'red',
+      weight:1
     })
+
+    let tempfillcolor = layer.options.fillColor
+    let tempopacity = layer.options.opacity
+
+    layer.on({
+      mouseover: (e) => {
+        this.setState({ descriptDisplay: 1, })
+        this.setState({
+          descriptDisplay: 1,
+          descriptionInfo: {
+            State_Name: feature.properties.NAME,
+            State_Land: feature.properties.density,
+            PRECINCT_N: feature.properties.PRECINCT_N,
+            TOTPOP: feature.properties.TOTPOP,
+            VAP: feature.properties.VAP,
+            HVAP: feature.properties.HVAP,
+            WVAP: feature.properties.WVAP,
+            BVAP: feature.properties.BVAP,
+            AMINVAP: feature.properties.AMINVAP,
+            ASIANVAP: feature.properties.ASIANVAP,
+            NHPIVAP: feature.properties.NHPIVAP,
+            OTHERVAP: feature.properties.OTHERVAP,
+            WHITE: feature.properties.WHITE,
+            BLACK: feature.properties.BLACK,
+            HISP: feature.properties.HISP,
+            AMIN: feature.properties.AMIN,
+            OTHER: feature.properties.OTHER,
+            ASIAN: feature.properties.ASIAN,
+            NHPI: feature.properties.NHPI
+          },
+        })
+
+        layer.setStyle({
+          fillColor: 'red',
+          opacity: 1
+        })
+      },
+
+      mouseout: (e) => {
+        this.setState({ descriptDisplay: 0 })
+        layer.setStyle({
+          fillColor: tempfillcolor,
+          opacity: tempopacity
+        })
+      },
+    });
+
   }
 
   onEachaverageFeature(feature, layer) {
-    function random_rgba() {
-      var o = Math.round, r = Math.random, s = 255;
-      return 'rgb(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
-    }
-
-    let color = random_rgba();
+    
     layer.setStyle({
-      fillColor: color,
       opacity: 0.5,
-      color: 'white'
+      color: 'white',
+      weight:1
     })
+
+    let tempfillcolor = layer.options.fillColor
+    let tempopacity = layer.options.opacity
+
+    layer.on({
+      mouseover: (e) => {
+        this.setState({ descriptDisplay: 1, })
+        this.setState({
+          descriptDisplay: 1,
+          descriptionInfo: {
+            State_Name: feature.properties.NAME,
+            State_Land: feature.properties.density,
+            PRECINCT_N: feature.properties.PRECINCT_N,
+            TOTPOP: feature.properties.TOTPOP,
+            VAP: feature.properties.VAP,
+            HVAP: feature.properties.HVAP,
+            WVAP: feature.properties.WVAP,
+            BVAP: feature.properties.BVAP,
+            AMINVAP: feature.properties.AMINVAP,
+            ASIANVAP: feature.properties.ASIANVAP,
+            NHPIVAP: feature.properties.NHPIVAP,
+            OTHERVAP: feature.properties.OTHERVAP,
+            WHITE: feature.properties.WHITE,
+            BLACK: feature.properties.BLACK,
+            HISP: feature.properties.HISP,
+            AMIN: feature.properties.AMIN,
+            OTHER: feature.properties.OTHER,
+            ASIAN: feature.properties.ASIAN,
+            NHPI: feature.properties.NHPI
+          },
+        })
+
+        layer.setStyle({
+          fillColor: 'red',
+          opacity: 1
+        })
+      },
+
+      mouseout: (e) => {
+        this.setState({ descriptDisplay: 0 })
+        layer.setStyle({
+          fillColor: tempfillcolor,
+          opacity: tempopacity
+        })
+      },
+    });
+
+    
   }
 
   onEachFeature(feature, layer) {
@@ -203,7 +330,7 @@ class leafletMap extends React.Component {
     }
     else if (this.props.MapDisplay.display === "otherDensity") {
       let otherDensityPercentage = feature.properties.OTHER / (feature.properties.TOTPOP)
-      let res = heatMapColorforValue(otherDensityPercentage, otherDensityCount, 1 / otherDensityCount *50)
+      let res = heatMapColorforValue(otherDensityPercentage, otherDensityCount, 1 / otherDensityCount *5)
       layer.setStyle({ fillColor: res,fillOpacity: 0.6 })
       tempfillcolor = layer.options.fillColor
       tempopacity = layer.options.opacity

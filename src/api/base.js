@@ -3,7 +3,8 @@ const base = {
     jobs:"/api/jobs",
     job:"/api/job",
     map:"api/state/",
-    updata:"/api/jobs/update"
+    updata:"/api/jobs/update",
+    districting:"/api/districting/"
 }
 
 export default base

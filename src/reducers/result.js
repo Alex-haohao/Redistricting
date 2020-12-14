@@ -5,7 +5,12 @@ const initState = {
     status: "no",
     boxData: [],
     minorities : [],
-    demographic : []
+    demographic : [],
+    averageid:-1,
+    extremeid:-1,
+    randomid:-1,
+    extremeDemographic:-1,
+    randomDemographic:-1,
   }
 
 
@@ -18,6 +23,11 @@ const result = (state=initState,action) =>{
                 boxData : action.data.boxData ? action.data.boxData : [],
                 minorities : action.data.minorities ? action.data.minorities :[],
                 demographic : action.data.demographic ? action.data.demographic :[],
+                extremeDemographic : action.data.extremeDemographic ? action.data.extremeDemographic :[],
+                randomDemographic : action.data.randomDemographic ? action.data.randomDemographic :[],
+                averageid: action.data.averageid ? action.data.averageid : -1,
+                extremeid: action.data.extremeid ? action.data.extremeid : -1,
+                randomid: action.data.randomid ? action.data.randomid : -1,
             }
     
         default:

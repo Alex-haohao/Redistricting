@@ -20,8 +20,19 @@ const jobs = {
     },
     cancelJob(data){
         return deleteData(base.job + '/' + data + "/cancel")
+    },
+    getlog(data){
+        return getData(base.job + '/' + data + '/log')
+    },
+    getCompleted(){
+        return getData(base.jobs + '/update/completed')
+    },
+    updateJob(){
+        return getData(base.jobs + '/update')
+    },
+    getdistricting(data){
+        return getData(base.districting + data)
     }
-
 }
 
 

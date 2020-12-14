@@ -9,9 +9,8 @@ import * as randomLayerDisplay from '../../../actions/randomLayerDisplay'
 import { Card, Checkbox,Button } from 'antd';
 import './style.less';
 import shortid from 'shortid'
-import randomPlan from '../../../static/GA_random.json'
-import averagePlan from '../../../static/GA_average.json'
-import extremePlan from '../../../static/GA_extreme.json'
+import api from '../../../api'
+
 
 const { Meta } = Card;
 const CheckboxGroup = Checkbox.Group;
@@ -35,10 +34,13 @@ class Summary extends React.Component {
     });
 
     if (checkedList.findIndex(element => element === "Average") != -1) {
-      this.props.averageLayerDisplay.changeMapDisplay({
-        averageGeodata: averagePlan,
-        jobid: shortid.generate()
-      })
+      api.jobs.getdistricting(this.props.Result.averageid).then(res => res.json())
+      .then(data => {
+        this.props.averageLayerDisplay.changeMapDisplay({
+          averageGeodata: data,
+          jobid: shortid.generate()
+        })
+      });
     }
     else {
       this.props.averageLayerDisplay.changeMapDisplay({
@@ -48,10 +50,15 @@ class Summary extends React.Component {
     }
 
     if (checkedList.findIndex(element => element === "Extreme") != -1) {
-      this.props.extremeLayerDisplay.changeMapDisplay({
-        extremeGeodata: extremePlan,
-        jobid: shortid.generate()
-      })
+      api.jobs.getdistricting(this.props.Result.extremeid).then(res => res.json())
+      .then(data => {
+        this.props.extremeLayerDisplay.changeMapDisplay({
+          extremeGeodata: data,
+          jobid: shortid.generate()
+        })
+      });
+
+      
     }
     else {
       this.props.extremeLayerDisplay.changeMapDisplay({
@@ -61,10 +68,15 @@ class Summary extends React.Component {
     }
 
     if (checkedList.findIndex(element => element === "Random") != -1) {
-      this.props.randomLayerDisplay.changeMapDisplay({
-        randomGeodata: randomPlan,
-        jobid: shortid.generate()
-      })
+
+      api.jobs.getdistricting(this.props.Result.randomid).then(res => res.json())
+      .then(data => {
+        this.props.randomLayerDisplay.changeMapDisplay({
+          randomGeodata: data,
+          jobid: shortid.generate()
+        })
+      });
+
     }
     else {
       this.props.randomLayerDisplay.changeMapDisplay({
@@ -99,6 +111,8 @@ class Summary extends React.Component {
     const plainOptions = ['Average', 'Extreme', 'Random'];
 
     let jobid = this.props.Result.jobid !== -1 ? "Summary of JobID: " + this.props.Result.jobid : "Did not choose any job"
+    let isAble = this.props.Result.jobid !== -1  ? false : true
+
     return (
       <div>
         <Card
@@ -117,6 +131,7 @@ class Summary extends React.Component {
         <br />
         <br />
         <CheckboxGroup
+          disabled ={isAble}
           options={plainOptions}
           value={this.state.checkedList}
           onChange={this.onChange}
@@ -124,12 +139,18 @@ class Summary extends React.Component {
         <br />
         <br />
 
-        <br />
-        <br />
+        <h3>District boundary color</h3>
+        <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"blue",border:"1px solid black"}}></div>Current</p>
+        <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"white",border:"1px solid black"}}></div>Average</p>
+        <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"red",border:"1px solid black"}}></div>Extreme</p>
+        <p style={{marginLeft:10,fontSize : "16px",lineHeight:1}}> <div className="box" style={{marginRight:10,background:"yellow",border:"1px solid black"}}></div>Random</p>
 
+        <br />
+        <br />
         <span style={{ fontSize: 25, marginLeft: 30 }}>Download Districting Plan</span>
         <br />
         <Button
+        disabled ={isAble}
         style={{marginLeft: 100 }}
           onClick={this.handleDownloadClick}
         >

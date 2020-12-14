@@ -91,9 +91,13 @@ class GeneratePlan extends React.Component {
     
     render() {
         const marks = {
-            0: 'less',
-            1: 'more',
+            0.3: 'least',
+            0.4: 'less',
+            0.5:'more',
+            0.6: 'very',
           };
+
+          
 
         let { PlanNuminputValue, CompactnessinputValue, PopDiffinputValue } = this.state;
         return (
@@ -107,14 +111,14 @@ class GeneratePlan extends React.Component {
                         <br /><br /><br />
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Plan Numbers: </span>
-                <InputNumber size="large" min={100} max={10000} value={PlanNuminputValue} onChange={this.handlePlanNumChange} />
+                <InputNumber size="large" min={1} max={5000} value={PlanNuminputValue} onChange={this.handlePlanNumChange} />
                     <br />
                 <Row>
                     <Col span={3}></Col>
                     <Col span={18}>
                         <Slider
-                            min={100}
-                            max={10000}
+                            min={1}
+                            max={5000}
                             onChange={this.handlePlanNumChange}
                             value={typeof PlanNuminputValue === 'number' ? PlanNuminputValue : 0}
                         />
@@ -123,14 +127,15 @@ class GeneratePlan extends React.Component {
                 <br />
 
                 <span style={{ fontSize: 20, marginLeft: "20px", marginRight: "10px" }}>Population Difference: </span>
-                <InputNumber size="large" min={1000} max={100000} value={PopDiffinputValue} onChange={this.handlePopDiffChange} />
+                <InputNumber size="large" min={0} max={1} value={PopDiffinputValue} onChange={this.handlePopDiffChange} />
                 <br />
                 <Row>
                     <Col span={3}></Col>
                     <Col span={18}>
                         <Slider
-                            min={1000}
-                            max={100000}
+                        step={0.01}
+                            min={0}
+                            max={1}
                             onChange={this.handlePopDiffChange}
                             value={typeof PopDiffinputValue === 'number' ? PopDiffinputValue : 0}
                         />
@@ -145,9 +150,9 @@ class GeneratePlan extends React.Component {
                     <Col span={18}>
                         <Slider
                         marks={marks}
-                            step={0.01}
-                            min={0}
-                            max={1}
+                            step={0.1}
+                            min={0.3}
+                            max={0.6}
                             onChange={this.handleCompactnessChange}
                             value={typeof CompactnessinputValue === 'number' ? CompactnessinputValue : 0}
                         />

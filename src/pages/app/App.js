@@ -9,6 +9,7 @@ import BoxPlot from './Summary/Chart/boxPlot'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as mapDisplayAction from '../../actions/mapDisplay'
+
 const { Footer, Content } = Layout;
 
 class App extends React.Component {
@@ -25,7 +26,11 @@ class App extends React.Component {
               <SiderMenu></SiderMenu>
               <Content style={{ minHeight: '90vh'  }}>
                 {this.props.MapDisplay.isShow ? <Map></Map> : <BoxPlot
-                 data = {this.props.Result.boxData} minorities = {this.props.Result.minorities} demographic =  {this.props.Result.demographic} ></BoxPlot>}
+                 data = {this.props.Result.boxData} 
+                 minorities = {this.props.Result.minorities} 
+                 demographic =  {this.props.Result.demographic} 
+                 extreme = {this.props.Result.extremeDemographic}
+                 random = {this.props.Result.randomDemographic} ></BoxPlot>}
               </Content>
             </Layout>
           </Content>
