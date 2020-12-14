@@ -285,11 +285,17 @@ class MapDisplay2 extends React.Component {
         {this.props.MapDisplay.display === "default" ? null : <Row>
           <Col span={3}></Col>
           <Col span={9}>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,90%,50%)"}}></div> {"  >"} 50%</p>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,75%,50%)"}}></div>{"  >"} 25%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,100%,50%)"}}></div> {"  >"} 90%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,90%,50%)"}}></div> {"  >"} 70%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,80%,50%)"}}></div>{"  >"} 50%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,70%,50%)"}}></div>{"  ="} 30%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,60%,50%)"}}></div>{"  ="} 10%</p>
           <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,50%,50%)"}}></div>{"  ="} 0%</p>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,25%,50%)"}}></div>{"  <"} 25%</p>
-          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,10%,50%)"}}></div>{"  <"} 50%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,40%,50%)"}}></div>{"  ="} -10%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,30%,50%)"}}></div>{"  ="} -30%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,20%,50%)"}}></div>{"  ="} -50%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,10%,50%)"}}></div>{"  <"} -70%</p>
+          <p style={{fontSize : "16px",lineHeight:1}}> <div className="box" style={{background:"hsl(150,0%,50%)"}}></div>{"  <"} -90%</p>
           </Col>
         </Row>}
         

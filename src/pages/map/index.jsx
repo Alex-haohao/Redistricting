@@ -12,7 +12,7 @@ import api from '../../api'
 import Legend from "./legend";
 
 
-const firstOverlayRef = createRef();
+const legendRef = createRef();
 const mapRef = createRef();
 
 const DEFAULT_VIEWPORT = {
@@ -687,7 +687,7 @@ class leafletMap extends React.Component {
           }
           
 
-          <Legend />
+         {/* <Legend ref={legendRef}/>  */}
         </Map>
       </div>
     );

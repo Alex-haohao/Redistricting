@@ -58,6 +58,7 @@ class Legend extends MapControl {
 
     const { map } = this.props.leaflet;
     legend.addTo(map);
+    
   }
 }
 
