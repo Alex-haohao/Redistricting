@@ -183,8 +183,8 @@ class GeneratePlan extends React.Component {
                             <Option value="BLACK">Black</Option>
                             <Option value="ASIAN">Asian</Option>
                             <Option value="NATIVE">American Indian and Alaska Native</Option>
-                            <Option value="Native Hawaiian and Pacific Islander">Native Hawaiian and Pacific Islander</Option>
-                            <Option value="Other race">Other race</Option>
+                            <Option value="NHPI">Native Hawaiian and Pacific Islander</Option>
+                            {/* <Option value="Other race">Other race</Option> */}
                         </Select>
 
                     </Col>
