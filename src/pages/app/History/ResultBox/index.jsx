@@ -96,8 +96,9 @@ class ResultBox extends React.Component {
                     ></DeleteModal> </div> :
                         <div>
                             <CancelModal onClick={e => { e.stopPropagation() }}
-                                jobid={this.props.data.jobId}>
-                                handleCancelCallback={this.props.handleCancelCallback}
+                                jobid={this.props.data.jobId}
+                                handleCancelCallback={this.props.handleCancelCallback}>
+                                
                             </CancelModal>
                         </div>
                 }
@@ -108,7 +109,7 @@ class ResultBox extends React.Component {
                     <Panel header="More detail" key="1">
                         <p style={{ fontSize: "18px" }}>State: {this.props.data.state}</p>
                         <p style={{ fontSize: "18px" }}>Plan numbers: {this.props.data.numberOfDistrictings}</p>
-                        <p style={{ fontSize: "18px" }}>Compactness: {this.props.data.compactnessGoal}</p>
+                        <p style={{ fontSize: "18px" }}>Compactness: {compactName}</p>
                         <p style={{ fontSize: "18px" }}>Population Difference: {this.props.data.populationDifference}</p>
                         <Button type="primary" disabled={isSummary} onClick={this.changeCurrentRes.bind(this)}> Summary </Button>
                     </Panel>

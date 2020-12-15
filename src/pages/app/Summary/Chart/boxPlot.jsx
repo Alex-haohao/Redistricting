@@ -13,10 +13,15 @@ import {
 import { DataView } from "@antv/data-set";
 import { Card, Checkbox } from 'antd';
 import api from '../../../../api'
+import GA from '../../../../static/georgia_current_districting_withoutGeo.json'
+import LA from '../../../../static/louisiana_current_districting_withoutGeo.json'
+import MI from '../../../../static/mississippi_current_districting_withoutGeo.json'
+
 const CheckboxGroup = Checkbox.Group;
 const defaultCheckedList = [];
 
 class Demo extends React.Component {
+
   onChange = checkedList => {
     this.setState({
       checkedList
@@ -39,6 +44,12 @@ class Demo extends React.Component {
     else {
       this.setState({ extreme: false })
     }
+    if (checkedList.findIndex(element => element === "Enacted") != -1) {
+      this.setState({ enacted: true })
+    }
+    else {
+      this.setState({ enacted: false })
+    }
   }
 
   state = {
@@ -47,12 +58,12 @@ class Demo extends React.Component {
     extreme: false,
     average: false,
     random: false,
+    enacted: false,
   };
 
   componentWillMount() {
     api.jobs.getlog(this.props.Result.jobid).then(res => res.text())
       .then(text => {
-        console.log(text)
         this.setState({
           logFile: text
         });
@@ -62,6 +73,7 @@ class Demo extends React.Component {
 
   render() {
 
+    
     let newData = this.props.data
     let minID = newData[0].boxId
     newData.forEach(element => {
@@ -72,14 +84,73 @@ class Demo extends React.Component {
     const minorities = this.props.minorities.join("+") + " VAP%"
     const percentage = this.props.minorities.join("+") + " VAPPercentage%"
 
+    let black = false
+    let amin = false
+    let asian = false;
+    let white = false;
+    let hisp = false;
+    let nhpi = false;
+
+    if(this.props.minorities.findIndex(element => element === "HISPANIC") != -1){
+      hisp = true
+    }
+    if(this.props.minorities.findIndex(element => element === "WHITE") != -1){
+      white = true
+    }
+    if(this.props.minorities.findIndex(element => element === "BLACK") != -1){
+      black = true
+    }
+    if(this.props.minorities.findIndex(element => element === "ASIAN") != -1){
+      asian = true
+    }
+    if(this.props.minorities.findIndex(element => element === "NATIVE") != -1){
+      amin = true
+    }
+    if(this.props.minorities.findIndex(element => element === "Native Hawaiian and Pacific Islander") != -1){
+      nhpi = true
+    }
+
+    
+    let currentMap = {}
+    if(this.props.Result.jobData.state === "GEORGIA"){
+      currentMap = GA
+    }
+    else if(this.props.Result.jobData.state === "LOUISIANA"){
+      currentMap = LA
+    }
+    else if(this.props.Result.jobData.state === "MISSISSIPPI"){
+      currentMap = MI
+    }
+
+
+    let allVap = []
+    currentMap.features.forEach(element => {
+      let totalvap = 0
+      let minorityvap = 0
+      totalvap = totalvap+element.properties.VAP
+      
+      if(black ===true){minorityvap = minorityvap + element.properties.BVAP}
+      if(white ===true){minorityvap = minorityvap + element.properties.WVAP}
+      if(hisp ===true){minorityvap = minorityvap + element.properties.HVAP}
+      if(nhpi ===true){minorityvap = minorityvap + element.properties.NHPIVAP}
+      if(asian ===true){minorityvap = minorityvap + element.properties.ASIANVAP}
+      if(amin ===true){minorityvap = minorityvap + element.properties.AMINVAP}
+      allVap.push(minorityvap/totalvap)
+    });
+
+    allVap =allVap.sort((a,b)=>{return a-b})    
+
+
     let BVAPPercentages = this.props.demographic
     let extreme = this.props.extreme
     let random = this.props.random
+
 
     for (let i = 0; i < newData.length; i++) {
       newData[i]["BVAPPercentage"] = BVAPPercentages[i]
       newData[i]["extreme"] = extreme[i]
       newData[i]["random"] = random[i]
+      newData[i]["enacted"] = allVap[i]
     }
 
     const dv = new DataView().source(newData);
@@ -102,6 +173,11 @@ class Demo extends React.Component {
         max: 1,
         nice: true
       },
+      enacted: {
+        min: 0,
+        max: 1,
+        nice: true
+      },
       Districts: {
         alias: "Districts"
       },
@@ -119,7 +195,7 @@ class Demo extends React.Component {
         nice: true
       }
     };
-    const plainOptions = ['Average', 'Extreme', 'Random'];
+    const plainOptions = ['Average', 'Extreme', 'Random','Enacted'];
 
     let compactName = ""
     if(this.props.Result.jobData.compactnessGoal <= 0.3){
@@ -145,8 +221,9 @@ class Demo extends React.Component {
         />
         <br></br>
         <div className="box" style={{ marginLeft: 60, background: "red", border: "1px solid black" }}></div>
-        <div className="box" style={{ marginLeft: 60, background: "black", border: "1px solid black" }}></div>
-        <div className="box" style={{ marginLeft: 60, background: "blue", border: "1px solid black" }}></div>
+        <div className="box" style={{ marginLeft: 70, background: "black", border: "1px solid black" }}></div>
+        <div className="box" style={{ marginLeft: 70, background: "blue", border: "1px solid black" }}></div>
+        <div className="box" style={{ marginLeft: 70, background: "green", border: "1px solid black" }}></div>
 
         <Chart
           height={500}
@@ -188,6 +265,16 @@ class Demo extends React.Component {
             shape={"square"}
             color={"blue"}
           />
+
+          <Geom
+            type="point"
+            position="boxId*enacted"
+            opacity={0.8}
+            size={this.state.enacted === true ? 4 : 1}
+            tooltip={false}
+            shape={"square"}
+            color={"green"}
+          />  
 
           <Axis name="Districts" position="bottom" title />
           {/* <Axis name="BVAPPercentage" position="left" title /> */}

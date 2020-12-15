@@ -19,7 +19,7 @@ const jobs = {
         return getData(base.updataJob)
     },
     cancelJob(data){
-        return deleteData(base.job + '/' + data + "/cancel")
+        return postData(base.job + '/' + data + "/cancel")
     },
     getlog(data){
         return getData(base.job + '/' + data + '/log')
