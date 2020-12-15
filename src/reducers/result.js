@@ -11,7 +11,8 @@ const initState = {
     randomid:-1,
     extremeDemographic:-1,
     randomDemographic:-1,
-    jobData : {}
+    jobData : {},
+    logfile : '' 
   }
 
 
@@ -30,6 +31,7 @@ const result = (state=initState,action) =>{
                 extremeid: action.data.extremeid ? action.data.extremeid : -1,
                 randomid: action.data.randomid ? action.data.randomid : -1,
                 jobData:action.data.jobData ? action.data.jobData : -1,
+                logfile : action.data.logfile? action.data.logfile : ''
             }
     
         default:

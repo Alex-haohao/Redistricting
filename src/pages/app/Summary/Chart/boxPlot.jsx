@@ -61,19 +61,10 @@ class Demo extends React.Component {
     enacted: false,
   };
 
-  componentWillMount() {
-    api.jobs.getlog(this.props.Result.jobid).then(res => res.text())
-      .then(text => {
-        this.setState({
-          logFile: text
-        });
-      });
-  }
-
 
   render() {
 
-    
+  
     let newData = this.props.data
     let minID = newData[0].boxId
     newData.forEach(element => {
@@ -334,7 +325,7 @@ class Demo extends React.Component {
 
         <Card title="Log summary" style={{ display: "inline-block", width: 600, maxHeight: 350, overflow: "scroll" }}>
 
-          <pre id="contents">{this.state.logFile}</pre>
+          <pre id="contents">{this.props.Result.logfile}</pre>
 
         </Card>
 

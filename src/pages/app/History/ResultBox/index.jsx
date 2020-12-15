@@ -7,6 +7,7 @@ import { Card, Collapse, Button } from 'antd';
 import DeleteModal from "../DeleteModal"
 import CancelModal from "../CancelPopUp"
 import './style.less'
+import api from '../../../../api'
 const { Panel } = Collapse;
 
 
@@ -46,27 +47,36 @@ class ResultBox extends React.Component {
             extremetemp.push(element.demographics.minoritiesVapPercentage)
         });
 
+       
+
+
         randomDemographic.forEach(element => {
             randomtemp.push(element.demographics.minoritiesVapPercentage)
         });
 
-        this.props.resultAction.changeCurrentResult({
-            jobid: this.props.data.jobId,
-            boxData: this.props.data.summary,
-            minorities: this.props.data.minorities,
-            demographic: temp,
-            extremeDemographic: extremetemp,
-            randomDemographic: randomtemp,
-            averageid: averageid,
-            extremeid: extremeid,
-            randomid: randomid,
-            jobData: this.props.data
-        })
-        this.props.mapDisplayAction.changeMapDisplay({
-            isShow: this.props.MapDisplay.isShow,
-            display: this.props.MapDisplay.display,
-            sidemenu: "3"
-        })
+        api.jobs.getlog(this.props.data.jobId).then(res => res.text())
+        .then(text => {
+            this.props.resultAction.changeCurrentResult({
+                jobid: this.props.data.jobId,
+                boxData: this.props.data.summary,
+                minorities: this.props.data.minorities,
+                demographic: temp,
+                extremeDemographic: extremetemp,
+                randomDemographic: randomtemp,
+                averageid: averageid,
+                extremeid: extremeid,
+                randomid: randomid,
+                jobData: this.props.data,
+                logfile: text
+            })
+            this.props.mapDisplayAction.changeMapDisplay({
+                isShow: this.props.MapDisplay.isShow,
+                display: this.props.MapDisplay.display,
+                sidemenu: "3"
+            })
+        });
+
+        
     }
 
     render() {
